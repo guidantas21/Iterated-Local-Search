@@ -58,3 +58,4 @@ cd build
 
 ## References
 - https://github.com/cvneves/kit-opt/tree/master/GILS-RVND-TSP
+- http://comopt.ifi.uni-heidelberg.de/software/TSPLIB95/STSP.html
