@@ -15,7 +15,7 @@ void calculateObjectiveValue(Solution& solution, double **adjacencyMatrix)
     solution.cost = 0;
     size_t solutionSize = solution.sequence.size();
 
-    for (int i = 0; i < solutionSize - 1; i++)
+    for (size_t i = 0; i < solutionSize - 1; i++)
     {
         solution.cost += adjacencyMatrix[solution.sequence[i]][solution.sequence[i+1]];
     }
