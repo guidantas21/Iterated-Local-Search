@@ -12,11 +12,11 @@ void printSolution(Solution& solution)
 
 void calculateObjectiveValue(Solution& solution, double **adjacencyMatrix)
 {
-    solution.objectiveValue = 0;
+    solution.cost = 0;
     size_t solutionSize = solution.sequence.size();
 
     for (int i = 0; i < solutionSize - 1; i++)
     {
-        solution.objectiveValue += adjacencyMatrix[solution.sequence[i]][solution.sequence[i+1]];
+        solution.cost += adjacencyMatrix[solution.sequence[i]][solution.sequence[i+1]];
     }
 }

@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 
+#include "ILS.hpp"
 #include "solution.hpp"
 #include "data.hpp"
 
@@ -11,7 +12,7 @@ int main(int argc, char** argv)
     data.read();
     
 
-    size_t SIZE = data.getDimension();
+    const size_t SIZE = data.getDimension();
 
     double **adjacencyMatrix = data.getMatrixCost();
 
@@ -23,7 +24,7 @@ int main(int argc, char** argv)
     printSolution(solutionTest);
 
 
-    for (size_t i = 0; i < dimension; ++i) 
+    for (size_t i = 0; i < SIZE; ++i) 
     {
         delete[] adjacencyMatrix[i];
     }

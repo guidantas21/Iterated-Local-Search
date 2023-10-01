@@ -9,7 +9,7 @@
 typedef struct Solution 
 {
     std::vector<int> sequence;
-    int objectiveValue;
+    double cost;
 } Solution;
 
 void printSolution(Solution& solution);
