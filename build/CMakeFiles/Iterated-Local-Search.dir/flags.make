@@ -6,5 +6,5 @@ CXX_DEFINES =
 
 CXX_INCLUDES = -I/home/gui/programming/projects/Iterated-Local-Search/include
 
-CXX_FLAGS = 
+CXX_FLAGS = -Wall -Wextra -O2
 
