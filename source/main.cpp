@@ -11,24 +11,14 @@ int main(int argc, char** argv)
 
     data.read();
     
+    int MAX_ITERATIONS = 1;
+    int MAX_ITERATIONS_ILS = 0;
 
     const size_t SIZE = data.getDimension();
 
     double **adjacencyMatrix = data.getMatrixCost();
 
-
-    Solution solutionTest = {{1,2,3}, 0};
-
-    calculateObjectiveValue(solutionTest, adjacencyMatrix);
-
-    printSolution(solutionTest);
-
-
-    for (size_t i = 0; i < SIZE; ++i) 
-    {
-        delete[] adjacencyMatrix[i];
-    }
-    delete[] adjacencyMatrix;
+    ILS(adjacencyMatrix, SIZE, MAX_ITERATIONS, MAX_ITERATIONS_ILS);
 
     return 0;
 }

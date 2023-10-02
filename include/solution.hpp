@@ -12,8 +12,8 @@ typedef struct Solution
     double cost;
 } Solution;
 
-void printSolution(Solution& solution);
+void printSolution(const Solution &solution);
 
-void calculateObjectiveValue(Solution& solution, double **adjacencyMatrix);
+void calculateCost(Solution &solution, double **adjacencyMatrix);
 
 #endif

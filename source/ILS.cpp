@@ -9,7 +9,7 @@ Solution ILS(double **adjacencyMatrix, size_t size, int maxIterations, int maxIt
 
     for (int i = 0; i < maxIterations; i++)
     {
-        Solution currentSolution = construction(); // To implement
+        Solution currentSolution = construction(adjacencyMatrix, size); // To implement
 
         Solution bestOfIteraction = currentSolution;
 

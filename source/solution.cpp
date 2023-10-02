@@ -1,16 +1,16 @@
 #include "solution.hpp"
 
-void printSolution(Solution& solution)
+void printSolution(const Solution &solution)
 {   
     for (const auto& vertex : solution.sequence)
     {
         std::cout << vertex << " -> ";
     }
 
-    std::cout << solution.sequence.front() << std::endl;
+    std::cout << solution.sequence.front() << '\n';
 }
 
-void calculateObjectiveValue(Solution& solution, double **adjacencyMatrix)
+void calculateCost(Solution &solution, double **adjacencyMatrix)
 {
     solution.cost = 0;
     size_t solutionSize = solution.sequence.size();
