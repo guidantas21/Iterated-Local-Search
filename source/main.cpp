@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <chrono>
-
+#include <iomanip>
 
 #include "ILS.hpp"
 #include "solution.hpp"
@@ -19,20 +19,45 @@ int main(int argc, char** argv)
 
     const size_t SIZE = data.getDimension();
 
+    data.printMatrixDist();
+
     std::cout << "-- ILS\n"; 
+
+    auto startTimer = std::chrono::high_resolution_clock::now();
+
     Solution solution = ILS(data.getMatrixCost(), SIZE, MAX_ITERATIONS, MAX_ITERATIONS_ILS);
 
+    auto stopTimer = std::chrono::high_resolution_clock::now();
+
+    auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stopTimer - startTimer);
+
+    
+
     std::cout << "-- Solution\n"; 
+
+    std::cout << "Best tour of all:\n";
     for (const int &v : solution.sequence)
     {
         std::cout << v << std::endl;
     }
     std::cout << endl;
 
-    if (isValid(solution, SIZE))
+    calculateCost(solution, data.getMatrixCost());
+
+    std::cout << "Soluion cost: " << solution.cost << std::endl;
+
+    float durationSeconds = (float) duration.count() / 1000000.0f;
+
+    std::cout << "ILS execution duration: " << durationSeconds << " seconds\n";
+
+    std::cout << "Status: ";
+
+    if (!isValid(solution, SIZE))
     {
-        std::cout << "VALID SOLUTION\n";
+        std::cout << "IN";
     }
+
+    std::cout << "VALID SOLUTION\n";
 
     return 0;
 }

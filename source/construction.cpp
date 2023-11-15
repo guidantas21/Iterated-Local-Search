@@ -49,8 +49,6 @@ Solution construction(double **adjacencyMatrix, const size_t &size)
 
         candidateList.erase(
             std::remove(candidateList.begin(), candidateList.end(), insertions[selectedIndex].insertedVertex), candidateList.end());
-        
-        insertions.clear();
     }
 
     return solution;
@@ -107,6 +105,7 @@ std::vector<Insertion> calculateInsertion(
         for (const int &k : candidateList)
         {
             Insertion insertion;
+
             insertion.cost = adjacencyMatrix[i][k] + adjacencyMatrix[k][j] - adjacencyMatrix[i][j];
             insertion.insertedVertex = k;
             insertion.removedEdge = edge;
