@@ -5,15 +5,18 @@
 
 #include <iostream>
 #include <vector>
+#include <unordered_set>
 
-typedef struct Solution 
+struct Solution 
 {
     std::vector<int> sequence;
     double cost;
-} Solution;
+};
 
 void printSolution(const Solution &solution);
 
 void calculateCost(Solution &solution, double **adjacencyMatrix);
+
+bool isValid(const Solution &solution, const size_t &size);
 
 #endif

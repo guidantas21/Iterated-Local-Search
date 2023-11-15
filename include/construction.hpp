@@ -4,12 +4,15 @@
 #define CONSTRUCTION_HPP
 
 #include <vector>
-#include <random>
-#include <algorithm>
 #include <unordered_set>
+#include <algorithm>
+#include <iostream>
+#include <random>
+#include <cmath>
 
 #include "solution.hpp"
 
-Solution construction(double **adjacencyMatrix, const int &size);
+
+Solution construction(double **adjacencyMatrix, const size_t &size);
 
 #endif

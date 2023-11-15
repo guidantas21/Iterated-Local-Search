@@ -9,6 +9,7 @@ int main(int argc, char** argv)
 {
     auto data = Data(argc, argv[1]);
 
+    std::cout << "-- Reading Data\n"; 
     data.read();
     
     int MAX_ITERATIONS = 1;
@@ -16,9 +17,21 @@ int main(int argc, char** argv)
 
     const size_t SIZE = data.getDimension();
 
-    double **adjacencyMatrix = data.getMatrixCost();
+    std::cout << "-- ILS\n"; 
+    Solution solution = ILS(data.getMatrixCost(), SIZE, MAX_ITERATIONS, MAX_ITERATIONS_ILS);
 
-    ILS(adjacencyMatrix, SIZE, MAX_ITERATIONS, MAX_ITERATIONS_ILS);
+    std::cout << "-- Solution\n"; 
+    for (const int &v : solution.sequence)
+    {
+        std::cout << v << std::endl;
+    }
+    std::cout << endl;
+
+    if (isValid(solution, SIZE))
+    {
+        std::cout << "VALID SOLUTION\n";
+    }
 
     return 0;
 }
+

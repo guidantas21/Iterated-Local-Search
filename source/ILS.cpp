@@ -6,13 +6,11 @@ Solution ILS(double **adjacencyMatrix, size_t size, int maxIterations, int maxIt
 
     bestOfAll.cost = std::numeric_limits<double>::infinity();
 
-
     for (int i = 0; i < maxIterations; i++)
     {
         Solution currentSolution = construction(adjacencyMatrix, size); // To implement
 
         Solution bestOfIteraction = currentSolution;
-
 
         int iterationsILS = 0;
 
@@ -35,6 +33,7 @@ Solution ILS(double **adjacencyMatrix, size_t size, int maxIterations, int maxIt
             bestOfAll = bestOfIteraction;
         }
     }
+    
 
     return bestOfAll;
 }
