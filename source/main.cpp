@@ -1,5 +1,7 @@
 #include <iostream>
 #include <vector>
+#include <chrono>
+
 
 #include "ILS.hpp"
 #include "solution.hpp"
@@ -12,7 +14,7 @@ int main(int argc, char** argv)
     std::cout << "-- Reading Data\n"; 
     data.read();
     
-    int MAX_ITERATIONS = 1;
+    int MAX_ITERATIONS = 50;
     int MAX_ITERATIONS_ILS = 0;
 
     const size_t SIZE = data.getDimension();

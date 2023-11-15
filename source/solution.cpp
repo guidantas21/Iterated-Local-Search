@@ -30,7 +30,7 @@ bool isValid(const Solution &solution, const size_t &size)
         // check duplicated vertices
         if (solutionSet.size() == size)
         {
-            for (int i = 1; i < solution.sequence.size(); i++)
+            for (size_t i = 1; i < solution.sequence.size(); i++)
             {
                 if (solution.sequence[i] < 0)
                 {
