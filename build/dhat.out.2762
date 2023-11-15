@@ -1,0 +1,249 @@
+{"dhatFileVersion":2
+,"mode":"heap","verb":"Allocated"
+,"bklt":true,"bkacc":true
+,"tu":"instrs","Mtu":"Minstr"
+,"tuth":500
+,"cmd":"./Iterated-Local-Search ../instances/a280.tsp"
+,"pid":2762
+,"te":246039841
+,"tg":244185660
+,"pps":
+ [{"tb":72704,"tbk":1
+  ,"tl":243529031
+  ,"mb":72704,"mbk":1
+  ,"gb":72704,"gbk":1
+  ,"eb":72704,"ebk":1
+  ,"rb":0,"wb":16
+  ,"fs":[1,2,3,4,5,6,7,8,9]
+  }
+ ,{"tb":31,"tbk":1
+  ,"tl":243411097
+  ,"mb":31,"mbk":1
+  ,"gb":31,"gbk":1
+  ,"eb":31,"ebk":1
+  ,"rb":20,"wb":22
+  ,"acc":[-20,2,-2,1,-9,0]
+  ,"fs":[10,11,12,13,14]
+  }
+ ,{"tb":472,"tbk":1
+  ,"tl":3743734
+  ,"mb":472,"mbk":1
+  ,"gb":0,"gbk":0
+  ,"eb":0,"ebk":0
+  ,"rb":330,"wb":482
+  ,"acc":[25,-3,22,-4,0,-48,2,-8,4,-8,2,-8,4,-16,1,-16,3,-4,8,4,-3,1,-8,0,-2,1,-6,0,-8,10,-8,2,-8,0,-16,1,-16,0,-4,3,-20,0,-8,3,-4,16,-4,13,-8,10,-88,1,-136,0,-8,1]
+  ,"fs":[1,15,16,17,18,19,20]
+  }
+ ,{"tb":8192,"tbk":1
+  ,"tl":3739674
+  ,"mb":8192,"mbk":1
+  ,"gb":0,"gbk":0
+  ,"eb":0,"ebk":0
+  ,"rb":5307,"wb":3483
+  ,"fs":[21,22,23,19,20]
+  }
+ ,{"tb":31,"tbk":1
+  ,"tl":3718841
+  ,"mb":31,"mbk":1
+  ,"gb":0,"gbk":0
+  ,"eb":0,"ebk":0
+  ,"rb":67,"wb":40
+  ,"acc":[10,7,-14,6,3,2,1,-12,0]
+  ,"fs":[10,11,24,25,26,20]
+  }
+ ,{"tb":2240,"tbk":1
+  ,"tl":243379840
+  ,"mb":2240,"mbk":1
+  ,"gb":2240,"gbk":1
+  ,"eb":2240,"ebk":1
+  ,"rb":1254400,"wb":2240
+  ,"fs":[21,27,20]
+  }
+ ,{"tb":2240,"tbk":1
+  ,"tl":243379800
+  ,"mb":2240,"mbk":1
+  ,"gb":2240,"gbk":1
+  ,"eb":2240,"ebk":1
+  ,"rb":1254400,"wb":2240
+  ,"fs":[21,28,20]
+  }
+ ,{"tb":2240,"tbk":1
+  ,"tl":243379760
+  ,"mb":2240,"mbk":1
+  ,"gb":2240,"gbk":1
+  ,"eb":2240,"ebk":1
+  ,"rb":1403344,"wb":2240
+  ,"fs":[21,29,20]
+  }
+ ,{"tb":627200,"tbk":280
+  ,"tl":68144680800
+  ,"mb":627200,"mbk":280
+  ,"gb":627200,"gbk":280
+  ,"eb":627200,"ebk":280
+  ,"rb":850592,"wb":627200
+  ,"fs":[21,30,20]
+  }
+ ,{"tb":15960,"tbk":280
+  ,"tl":269044
+  ,"mb":57,"mbk":1
+  ,"gb":0,"gbk":0
+  ,"eb":0,"ebk":0
+  ,"rb":24320,"wb":18424
+  ,"acc":[-8,2488,-8,1016,-4,2592,-4,0,1400,1120,1084,740,-29,0]
+  ,"fs":[10,31,32,33,34,35,36,20]
+  }
+ ,{"tb":15960,"tbk":280
+  ,"tl":258195
+  ,"mb":57,"mbk":1
+  ,"gb":0,"gbk":0
+  ,"eb":0,"ebk":0
+  ,"rb":22190,"wb":17430
+  ,"acc":[-8,2275,-8,945,-4,2450,-4,0,1400,1120,1084,456,-29,0]
+  ,"fs":[10,31,32,33,34,35,37,20]
+  }
+ ,{"tb":1024,"tbk":1
+  ,"tl":239643138
+  ,"mb":0,"mbk":0
+  ,"gb":1024,"gbk":1
+  ,"eb":1024,"ebk":1
+  ,"rb":361472,"wb":361472
+  ,"acc":[22252,22230,22132,21230,19436,19418,19370,19356,656,648,644,634,630,624,620,594,588,578,576,-2,574,570,-2,568,566,-5,564,-3,562,-906,560,-3,556,-2,554,-4,552,550,548,546,544,-3,536,534,532,528,-2,526,520,518,516,-2,514,-3,508,504,498,494,492,490,488,486,484,480,476,470,464,-2,454,452,444,440,434,430,422,414,412,406,398,394,390,386,378,368,360,354,350,336,330,322,312,302,292,284,282,266,262,258,242,236,230,224,222,218,214,204,196,188,184,176,164]
+  ,"fs":[1,38,39,40,41,42,43,44,45,46,47]
+  }
+ ,{"tb":4,"tbk":1
+  ,"tl":17117
+  ,"mb":0,"mbk":0
+  ,"gb":0,"gbk":0
+  ,"eb":0,"ebk":0
+  ,"rb":4,"wb":4
+  ,"acc":[-4,2]
+  ,"fs":[10,48,49,50,51,52]
+  }
+ ,{"tb":8,"tbk":1
+  ,"tl":16003
+  ,"mb":0,"mbk":0
+  ,"gb":0,"gbk":0
+  ,"eb":0,"ebk":0
+  ,"rb":12,"wb":8
+  ,"acc":[-4,2,-4,3]
+  ,"fs":[10,48,53,50,51,52]
+  }
+ ,{"tb":16,"tbk":1
+  ,"tl":16008
+  ,"mb":0,"mbk":0
+  ,"gb":0,"gbk":0
+  ,"eb":0,"ebk":0
+  ,"rb":24,"wb":16
+  ,"acc":[-4,2,-8,3,-4,2]
+  ,"fs":[10,54,55,50,51,52]
+  }
+ ,{"tb":32,"tbk":1
+  ,"tl":5858456
+  ,"mb":0,"mbk":0
+  ,"gb":32,"gbk":1
+  ,"eb":0,"ebk":0
+  ,"rb":2160,"wb":64
+  ,"acc":[-4,290,-4,54,-4,51,-4,107,-4,21,-4,16,-4,11,-4,6]
+  ,"fs":[10,48,56,50,51,52]
+  }
+ ,{"tb":1120,"tbk":1
+  ,"tl":7120110
+  ,"mb":0,"mbk":0
+  ,"gb":1120,"gbk":1
+  ,"eb":1120,"ebk":1
+  ,"rb":52668,"wb":6096
+  ,"fs":[10,57,58,51,52]
+  }
+ ,{"tb":131360,"tbk":5
+  ,"tl":3849555
+  ,"mb":17664,"mbk":1
+  ,"gb":30576,"gbk":1
+  ,"eb":34816,"ebk":1
+  ,"rb":96544,"wb":131360
+  ,"fs":[10,59,60,51,52]
+  }
+ ,{"tb":193088,"tbk":4
+  ,"tl":2081961
+  ,"mb":61152,"mbk":1
+  ,"gb":61152,"gbk":1
+  ,"eb":0,"ebk":0
+  ,"rb":1994568,"wb":870272
+  ,"fs":[10,61,62,60,51,52]
+  }
+ ,{"tb":64,"tbk":1
+  ,"tl":1262103
+  ,"mb":0,"mbk":0
+  ,"gb":0,"gbk":0
+  ,"eb":64,"ebk":1
+  ,"rb":108,"wb":36
+  ,"acc":[-4,3,-32,4,-4,1,-24,0]
+  ,"fs":[10,54,63,51,52]
+  }
+ ]
+,"ftbl":
+ ["[root]"
+ ,"0x4848899: malloc (in /usr/libexec/valgrind/vgpreload_dhat-amd64-linux.so)"
+ ,"0x490B939: ??? (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)"
+ ,"0x400647D: call_init.part.0 (dl-init.c:70)"
+ ,"0x4006567: call_init (dl-init.c:33)"
+ ,"0x4006567: _dl_init (dl-init.c:117)"
+ ,"0x40202C9: ??? (in /usr/lib/x86_64-linux-gnu/ld-linux-x86-64.so.2)"
+ ,"0x1: ???"
+ ,"0x1FFF00025A: ???"
+ ,"0x1FFF000272: ???"
+ ,"0x4849013: operator new(unsigned long) (in /usr/libexec/valgrind/vgpreload_dhat-amd64-linux.so)"
+ ,"0x49AD0BD: std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_mutate(unsigned long, unsigned long, char const*, unsigned long) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)"
+ ,"0x49AE25D: std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_replace(unsigned long, unsigned long, char const*, unsigned long) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)"
+ ,"0x10D1CE: Data::Data(int, char*) (in /mnt/c/Users/guidp/programming/projects/Iterated-Local-Search/build/Iterated-Local-Search)"
+ ,"0x10A98D: main (in /mnt/c/Users/guidp/programming/projects/Iterated-Local-Search/build/Iterated-Local-Search)"
+ ,"0x4C1364D: __fopen_internal (iofopen.c:65)"
+ ,"0x4C1364D: fopen@@GLIBC_2.2.5 (iofopen.c:86)"
+ ,"0x4931BB3: std::__basic_file<char>::open(char const*, std::_Ios_Openmode, int) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)"
+ ,"0x4979FFD: std::basic_filebuf<char, std::char_traits<char> >::open(char const*, std::_Ios_Openmode) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)"
+ ,"0x10D8ED: Data::read() (in /mnt/c/Users/guidp/programming/projects/Iterated-Local-Search/build/Iterated-Local-Search)"
+ ,"0x10A995: main (in /mnt/c/Users/guidp/programming/projects/Iterated-Local-Search/build/Iterated-Local-Search)"
+ ,"0x484A2F3: operator new[](unsigned long) (in /usr/libexec/valgrind/vgpreload_dhat-amd64-linux.so)"
+ ,"0x4976023: std::basic_filebuf<char, std::char_traits<char> >::_M_allocate_internal_buffer() (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)"
+ ,"0x497A015: std::basic_filebuf<char, std::char_traits<char> >::open(char const*, std::_Ios_Openmode) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)"
+ ,"0x49AEB4F: std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >::_M_append(char const*, unsigned long) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)"
+ ,"0x49292C8: std::basic_istream<char, std::char_traits<char> >& std::operator>><char, std::char_traits<char>, std::allocator<char> >(std::basic_istream<char, std::char_traits<char> >&, std::__cxx11::basic_string<char, std::char_traits<char>, std::allocator<char> >&) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)"
+ ,"0x10DA16: Data::read() (in /mnt/c/Users/guidp/programming/projects/Iterated-Local-Search/build/Iterated-Local-Search)"
+ ,"0x10DA6A: Data::read() (in /mnt/c/Users/guidp/programming/projects/Iterated-Local-Search/build/Iterated-Local-Search)"
+ ,"0x10DA88: Data::read() (in /mnt/c/Users/guidp/programming/projects/Iterated-Local-Search/build/Iterated-Local-Search)"
+ ,"0x10DAA6: Data::read() (in /mnt/c/Users/guidp/programming/projects/Iterated-Local-Search/build/Iterated-Local-Search)"
+ ,"0x10DAD0: Data::read() (in /mnt/c/Users/guidp/programming/projects/Iterated-Local-Search/build/Iterated-Local-Search)"
+ ,"0x4955978: std::string::_Rep::_S_create(unsigned long, unsigned long, std::allocator<char> const&) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)"
+ ,"0x49568AE: std::string::_Rep::_M_clone(std::allocator<char> const&, unsigned long) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)"
+ ,"0x4956975: std::string::reserve(unsigned long) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)"
+ ,"0x4991BC4: std::num_get<char, std::istreambuf_iterator<char, std::char_traits<char> > >::do_get(std::istreambuf_iterator<char, std::char_traits<char> >, std::istreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, std::_Ios_Iostate&, double&) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)"
+ ,"0x4984242: std::istream& std::istream::_M_extract<double>(double&) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)"
+ ,"0x10DED1: Data::read() (in /mnt/c/Users/guidp/programming/projects/Iterated-Local-Search/build/Iterated-Local-Search)"
+ ,"0x10DEE0: Data::read() (in /mnt/c/Users/guidp/programming/projects/Iterated-Local-Search/build/Iterated-Local-Search)"
+ ,"0x4C12BA3: _IO_file_doallocate (filedoalloc.c:101)"
+ ,"0x4C21CDF: _IO_doallocbuf (genops.c:347)"
+ ,"0x4C20F5F: _IO_file_overflow@@GLIBC_2.2.5 (fileops.c:744)"
+ ,"0x4C1F6D4: _IO_new_file_xsputn (fileops.c:1243)"
+ ,"0x4C1F6D4: _IO_file_xsputn@@GLIBC_2.2.5 (fileops.c:1196)"
+ ,"0x4C13FD6: fwrite (iofwrite.c:39)"
+ ,"0x498EEC5: std::ostreambuf_iterator<char, std::char_traits<char> > std::num_put<char, std::ostreambuf_iterator<char, std::char_traits<char> > >::_M_insert_float<double>(std::ostreambuf_iterator<char, std::char_traits<char> >, std::ios_base&, char, char, double) const (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)"
+ ,"0x499ED2D: std::ostream& std::ostream::_M_insert<double>(double) (in /usr/lib/x86_64-linux-gnu/libstdc++.so.6.0.30)"
+ ,"0x10D708: Data::printMatrixDist() (in /mnt/c/Users/guidp/programming/projects/Iterated-Local-Search/build/Iterated-Local-Search)"
+ ,"0x10A9A2: main (in /mnt/c/Users/guidp/programming/projects/Iterated-Local-Search/build/Iterated-Local-Search)"
+ ,"0x10C962: void std::vector<int, std::allocator<int> >::_M_realloc_insert<int>(__gnu_cxx::__normal_iterator<int*, std::vector<int, std::allocator<int> > >, int&&) (in /mnt/c/Users/guidp/programming/projects/Iterated-Local-Search/build/Iterated-Local-Search)"
+ ,"0x10BA25: get3RandomVertices(unsigned long const&) (in /mnt/c/Users/guidp/programming/projects/Iterated-Local-Search/build/Iterated-Local-Search)"
+ ,"0x10BC03: construction(double**, unsigned long const&) (in /mnt/c/Users/guidp/programming/projects/Iterated-Local-Search/build/Iterated-Local-Search)"
+ ,"0x10AD81: ILS(double**, unsigned long, int, int) (in /mnt/c/Users/guidp/programming/projects/Iterated-Local-Search/build/Iterated-Local-Search)"
+ ,"0x10A9BA: main (in /mnt/c/Users/guidp/programming/projects/Iterated-Local-Search/build/Iterated-Local-Search)"
+ ,"0x10BB7C: get3RandomVertices(unsigned long const&) (in /mnt/c/Users/guidp/programming/projects/Iterated-Local-Search/build/Iterated-Local-Search)"
+ ,"0x10C522: void std::vector<int, std::allocator<int> >::_M_realloc_insert<int const&>(__gnu_cxx::__normal_iterator<int*, std::vector<int, std::allocator<int> > >, int const&) (in /mnt/c/Users/guidp/programming/projects/Iterated-Local-Search/build/Iterated-Local-Search)"
+ ,"0x10BB50: get3RandomVertices(unsigned long const&) (in /mnt/c/Users/guidp/programming/projects/Iterated-Local-Search/build/Iterated-Local-Search)"
+ ,"0x10BB6F: get3RandomVertices(unsigned long const&) (in /mnt/c/Users/guidp/programming/projects/Iterated-Local-Search/build/Iterated-Local-Search)"
+ ,"0x10B0D7: getRemaingVertices(unsigned long const&, std::vector<int, std::allocator<int> > const&) (in /mnt/c/Users/guidp/programming/projects/Iterated-Local-Search/build/Iterated-Local-Search)"
+ ,"0x10BC89: construction(double**, unsigned long const&) (in /mnt/c/Users/guidp/programming/projects/Iterated-Local-Search/build/Iterated-Local-Search)"
+ ,"0x10B46F: calculateInsertion(double**, Solution const&, std::vector<int, std::allocator<int> > const&) (in /mnt/c/Users/guidp/programming/projects/Iterated-Local-Search/build/Iterated-Local-Search)"
+ ,"0x10BE0F: construction(double**, unsigned long const&) (in /mnt/c/Users/guidp/programming/projects/Iterated-Local-Search/build/Iterated-Local-Search)"
+ ,"0x10C7F2: void std::vector<Insertion, std::allocator<Insertion> >::_M_realloc_insert<Insertion&>(__gnu_cxx::__normal_iterator<Insertion*, std::vector<Insertion, std::allocator<Insertion> > >, Insertion&) (in /mnt/c/Users/guidp/programming/projects/Iterated-Local-Search/build/Iterated-Local-Search)"
+ ,"0x10B40E: calculateInsertion(double**, Solution const&, std::vector<int, std::allocator<int> > const&) (in /mnt/c/Users/guidp/programming/projects/Iterated-Local-Search/build/Iterated-Local-Search)"
+ ,"0x10C36C: construction(double**, unsigned long const&) (in /mnt/c/Users/guidp/programming/projects/Iterated-Local-Search/build/Iterated-Local-Search)"
+ ]
+}
