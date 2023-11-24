@@ -15,4 +15,6 @@
 
 Solution construction(double **adjacencyMatrix, const size_t &size);
 
+int getRandomNumber(const int &min, const int &max);
+
 #endif

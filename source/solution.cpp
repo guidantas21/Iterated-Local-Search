@@ -2,22 +2,21 @@
 
 void printSolution(const Solution &solution)
 {   
-    for (const auto& vertex : solution.sequence)
+    for (const int &v : solution.sequence)
     {
-        std::cout << vertex << " -> ";
+        std::cout << v << std::endl;
     }
-
-    std::cout << solution.sequence.front() << '\n';
+    std::cout << std::endl;
 }
 
-void calculateCost(Solution &solution, double **adjacencyMatrix)
+void calculateCost(Solution *solution, double **adjacencyMatrix)
 {
-    solution.cost = 0;
-    size_t solutionSize = solution.sequence.size();
+    solution->cost = 0;
+    size_t solutionSize = solution->sequence.size();
 
     for (size_t i = 0; i < solutionSize - 1; i++)
     {
-        solution.cost += adjacencyMatrix[solution.sequence[i]][solution.sequence[i+1]];
+        solution->cost += adjacencyMatrix[solution->sequence[i]][solution->sequence[i+1]];
     }
 }
 

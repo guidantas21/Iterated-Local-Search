@@ -15,8 +15,6 @@ double getRandomDouble(const int &min, const int &max);
 
 std::vector<int> get3RandomVertices(std::vector<int> &candidateList);
 
-
-
 std::vector<Insertion> calculateInsertion(
     double **adjacencyMatrix, const Solution &solution, const std::vector<int> &candidateList);
 
@@ -34,6 +32,8 @@ Solution construction(double **adjacencyMatrix, const size_t &size)
 
     solution.sequence = get3RandomVertices(candidateList);
 
+    calculateCost(&solution, adjacencyMatrix);
+
     while (!candidateList.empty())
     {
         std::vector<Insertion> insertions = calculateInsertion(adjacencyMatrix, solution, candidateList);
@@ -46,6 +46,8 @@ Solution construction(double **adjacencyMatrix, const size_t &size)
     
         solution.sequence.insert(
             solution.sequence.begin()+insertions[selectedIndex].removedEdge+1, insertions[selectedIndex].insertedVertex);
+
+        solution.cost += insertions[selectedIndex].cost;
 
         candidateList.erase(
             std::remove(candidateList.begin(), candidateList.end(), insertions[selectedIndex].insertedVertex), candidateList.end());
@@ -94,9 +96,9 @@ std::vector<int> get3RandomVertices(std::vector<int> &candidateList)
 std::vector<Insertion> calculateInsertion(
     double **adjacencyMatrix, const Solution &solution, const std::vector<int> &candidateList)
 {   
-    std::vector<Insertion> insertions;
-    insertions.reserve((solution.sequence.size() - 1) * candidateList.size());
+    std::vector<Insertion> insertions((solution.sequence.size() - 1) * candidateList.size());
 
+    int index = 0;
     for (size_t edge = 0; edge < solution.sequence.size()-1; edge++)
     {
         int i = solution.sequence[edge];
@@ -104,13 +106,11 @@ std::vector<Insertion> calculateInsertion(
 
         for (const int &k : candidateList)
         {
-            Insertion insertion;
+            insertions[index].cost = adjacencyMatrix[i][k] + adjacencyMatrix[j][k] - adjacencyMatrix[i][j];
+            insertions[index].insertedVertex = k;
+            insertions[index].removedEdge = edge;
 
-            insertion.cost = adjacencyMatrix[i][k] + adjacencyMatrix[k][j] - adjacencyMatrix[i][j];
-            insertion.insertedVertex = k;
-            insertion.removedEdge = edge;
-
-            insertions.push_back(insertion);
+            index++;
         }
     }
 

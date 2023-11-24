@@ -9,17 +9,23 @@
 
 int main(int argc, char** argv)
 {
+    ////////// LOAD DATA //////////
+
     auto data = Data(argc, argv[1]);
 
     std::cout << "-- Reading Data\n"; 
     data.read();
-    
-    int MAX_ITERATIONS = 50;
-    int MAX_ITERATIONS_ILS = 0;
 
     const size_t SIZE = data.getDimension();
 
+    int MAX_ITERATIONS = 50;
+    int MAX_ITERATIONS_ILS = SIZE >= 150 ? SIZE/2 : SIZE;
+
     data.printMatrixDist();
+
+
+    ////////// ILS EXECUTION //////////
+
 
     std::cout << "-- ILS\n"; 
 
@@ -31,33 +37,27 @@ int main(int argc, char** argv)
 
     auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stopTimer - startTimer);
 
-    
 
-    std::cout << "-- Solution\n"; 
+    ////////// RESULTS //////////
 
-    std::cout << "Best tour of all:\n";
-    for (const int &v : solution.sequence)
-    {
-        std::cout << v << std::endl;
-    }
-    std::cout << endl;
 
-    calculateCost(solution, data.getMatrixCost());
+    std::cout << "\n-- Solution\n"; 
+
+    std::cout << "\nBest tour of all:\n";
+    printSolution(solution);
 
     std::cout << "Soluion cost: " << solution.cost << std::endl;
 
-    float durationSeconds = (float) duration.count() / 1000000.0f;
 
+    float durationSeconds = (float) duration.count() / 1000000.0f;
     std::cout << "ILS execution duration: " << durationSeconds << " seconds\n";
+
 
     std::cout << "Status: ";
 
-    if (!isValid(solution, SIZE))
-    {
-        std::cout << "IN";
-    }
+    // if (!isValid(solution, SIZE)) std::cout << "IN";
 
-    std::cout << "VALID SOLUTION\n";
+    std::cout << (!isValid(solution, SIZE) ? "IN" : "") << "VALID SOLUTION\n";
 
     return 0;
 }

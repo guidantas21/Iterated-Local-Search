@@ -8,15 +8,20 @@ Solution ILS(double **adjacencyMatrix, size_t size, int maxIterations, int maxIt
 
     for (int i = 0; i < maxIterations; i++)
     {
-        Solution currentSolution = construction(adjacencyMatrix, size); // To implement
+        std::cout << "\n---- " << i << "\n\n";
+
+        Solution currentSolution = construction(adjacencyMatrix, size);
+
+        std::cout << "Current cost: " << currentSolution.cost << "\n";
 
         Solution bestOfIteraction = currentSolution;
+
 
         int iterationsILS = 0;
 
         while (iterationsILS <= maxIterationsILS)
         {
-            localSearch(); // To implement
+            localSearch(&currentSolution, adjacencyMatrix); // implementing
 
             if (currentSolution.cost < bestOfIteraction.cost)
             {
@@ -24,16 +29,19 @@ Solution ILS(double **adjacencyMatrix, size_t size, int maxIterations, int maxIt
                 iterationsILS = 0;
             }
 
-            currentSolution = pertubation(); // To implement
+            // currentSolution = pertubation(); // To implement
             iterationsILS++;
+
+            std::cout << "Best Iteration Cost: " << bestOfIteraction.cost << '\n';
         }
 
         if (bestOfIteraction.cost < bestOfAll.cost)
         {
             bestOfAll = bestOfIteraction;
         }
+
+        std::cout << "Best Global Cost: " << bestOfAll.cost << '\n';
     }
-    
 
     return bestOfAll;
 }

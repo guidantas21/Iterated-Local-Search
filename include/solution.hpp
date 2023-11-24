@@ -15,7 +15,7 @@ struct Solution
 
 void printSolution(const Solution &solution);
 
-void calculateCost(Solution &solution, double **adjacencyMatrix);
+void calculateCost(Solution *solution, double **adjacencyMatrix);
 
 bool isValid(const Solution &solution, const size_t &size);
 

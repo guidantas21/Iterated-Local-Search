@@ -4,9 +4,11 @@
 #define LOCALSEARCH_HPP
 
 #include <vector>
+#include <algorithm>
 
 #include "solution.hpp"
+#include "construction.hpp"
 
-Solution localSearch();
+void localSearch(Solution *solution, double **adjacencyMatrix);
 
 #endif
