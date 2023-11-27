@@ -47,6 +47,9 @@ int main(int argc, char** argv)
     printSolution(solution);
 
     std::cout << "Soluion cost: " << solution.cost << std::endl;
+    
+    calculateCost(&solution, data.getMatrixCost());
+    std::cout << "Soluion cost (correct): " << solution.cost << std::endl;
 
 
     float durationSeconds = (float) duration.count() / 1000000.0f;

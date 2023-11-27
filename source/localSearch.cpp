@@ -10,9 +10,17 @@ void execute2OPT(Solution *solution, int start, int end);
 double calculate2OPTCost(Solution *solution, int start, int end, double **adjacencyMatrix);
 
 
+
+bool bestImprovementOROPT(Solution *solution, int n, double **adjacencyMatrix);
+
+void executeOROPT(Solution *solution, int initial, int destiny, int n);
+
+double calculateOROPTCost(Solution *solution, int initial, int destiny, int n, double **adjacencyMatrix);
+
+
 void localSearch(Solution *solution, double **adjacencyMatrix)
 {
-    std::vector<int> neighborsList = { 1, 2 };
+    std::vector<int> neighborsList = { 1, 2, 3, 4, 5 };
     bool improved = false;
 
     std::cout << solution->cost << '\n';
@@ -29,11 +37,20 @@ void localSearch(Solution *solution, double **adjacencyMatrix)
             case 2:
                 improved = bestImprovement2OPT(solution, adjacencyMatrix);
                 break;
+            case 3:
+                improved = bestImprovementOROPT(solution, 1, adjacencyMatrix);
+                break;
+            case 4:
+                improved = bestImprovementOROPT(solution, 2, adjacencyMatrix);
+                break;
+            case 5:
+                improved = bestImprovementOROPT(solution, 3, adjacencyMatrix);
+                break;
         }
 
         if (improved)
         {
-            neighborsList = { 1, 2 };
+            neighborsList = { 1, 2, 3, 4, 5 };
         } 
         else {
             neighborsList.erase(neighborsList.begin() + n);
@@ -151,6 +168,61 @@ bool bestImprovement2OPT(Solution *solution, double **adjacencyMatrix)
     {
         execute2OPT(solution, bestStart, bestEnd);
 
+        solution->cost += bestDelta;
+
+        return true;
+    }
+
+    return false;
+}
+
+// OPTIMIZE
+void executeOROPT(Solution *solution, int initial, int destiny, int n) {
+    for (int i = 0; i < n; i++) {
+        for (int j = initial; j < destiny; j++)
+        {
+            std::swap(solution->sequence[j], solution->sequence[j+1]);
+        }   
+    }
+}
+
+double calculateOROPTCost(Solution *solution, int initial, int destiny, int n, double **adjacencyMatrix)
+{
+    double currentCost = adjacencyMatrix[solution->sequence[initial-1]][solution->sequence[initial]] 
+                       + adjacencyMatrix[solution->sequence[initial+n-1]][solution->sequence[initial+n]]
+                       + adjacencyMatrix[solution->sequence[destiny]][solution->sequence[destiny+1]];
+
+    double swapCost = adjacencyMatrix[solution->sequence[initial-1]][solution->sequence[initial+n]] 
+                    + adjacencyMatrix[solution->sequence[destiny]][solution->sequence[initial]]
+                    + adjacencyMatrix[solution->sequence[initial+n-1]][solution->sequence[destiny+1]];
+
+    return swapCost - currentCost;
+}
+
+bool bestImprovementOROPT(Solution *solution, int n, double **adjacencyMatrix)
+{
+    double bestDelta = 0;
+    int bestInitial = 0;
+    int bestDestiny = 0;
+    
+    for (size_t initial = 1; initial < solution->sequence.size() - 2; initial++)
+    {
+        for (size_t destiny = initial + n; destiny < solution->sequence.size() - 1; destiny++)
+        {
+            double delta = calculateOROPTCost(solution, initial, destiny, n, adjacencyMatrix);
+
+            if (delta < bestDelta)
+            {
+                bestDelta = delta;
+                bestInitial = initial;
+                bestDestiny = destiny;
+            } 
+        }
+    } 
+
+    if (bestDelta < 0)
+    {
+        executeOROPT(solution, bestInitial, bestDestiny, n);
         solution->cost += bestDelta;
 
         return true;
