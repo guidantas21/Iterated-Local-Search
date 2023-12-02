@@ -1,6 +1,11 @@
 #include "localSearch.hpp"
 
+
 bool bestImprovementSwap(Solution &solution, double **adjacencyMatrix);
+
+void executeSwap(std::vector<int> &sequence, int best_i, int best_j);
+
+double calculateSwapCost(std::vector<int> &sequence, int i, int j, double **adjacencyMatrix);
 
 
 bool bestImprovement2OPT(Solution &solution, double **adjacencyMatrix);
@@ -10,7 +15,6 @@ void execute2OPT(Solution &solution, int start, int end);
 double calculate2OPTCost(Solution &solution, int start, int end, double **adjacencyMatrix);
 
 
-
 bool bestImprovementOROPT(Solution &solution, int n, double **adjacencyMatrix);
 
 void executeOROPT(Solution &solution, int initial, int destiny, int n);
@@ -18,12 +22,11 @@ void executeOROPT(Solution &solution, int initial, int destiny, int n);
 double calculateOROPTCost(Solution &solution, int initial, int destiny, int n, double **adjacencyMatrix);
 
 
+
 void localSearch(Solution &solution, double **adjacencyMatrix)
 {
     std::vector<int> neighborsList = { 1, 2, 3, 4, 5 };
     bool improved = false;
-
-    // std::cout << solution->cost << '\n';
 
     while (neighborsList.empty() == false)
     {
@@ -62,47 +65,15 @@ void localSearch(Solution &solution, double **adjacencyMatrix)
 bool bestImprovementSwap(Solution &solution, double **adjacencyMatrix)
 {
     double bestDelta = 0;
-    int best_i = 0;
-    int best_j = 0;
+    int best_i = 0, best_j = 0;
 
-    for (size_t i = 1; i < solution.sequence.size() - 1; i++)
+    size_t swapRange = solution.sequence.size() - 1;
+
+    for (size_t i = 1; i < swapRange; i++)
     {
-        int vertex_i = solution.sequence[i];
-        int vertex_i_next = solution.sequence[i+1];
-        int vertex_i_prev = solution.sequence[i-1];
-
-        for (size_t j = i + 1; j < solution.sequence.size() - 1; j++)
+        for (size_t j = i + 1; j < swapRange; j++)
         {
-            int vertex_j = solution.sequence[j];
-            int vertex_j_next = solution.sequence[j+1];
-
-            double currentCost, swapCost;
-
-            // ...|v_i_prev|v_i|v_j|v_j_next|... -> ...|v_i_prev|v_j|v_i|v_j_next|...
-            if (i + 1 == j) 
-            {
-                // |v_i_prev|v_i| + |v_j|v_j_next|
-                currentCost = adjacencyMatrix[vertex_i_prev][vertex_i] + adjacencyMatrix[vertex_j][vertex_j_next];
-
-                // |v_i_prev|v_j| + |v_i|v_j_next|
-                swapCost = adjacencyMatrix[vertex_i][vertex_j_next] + adjacencyMatrix[vertex_i_prev][vertex_j];
-            } 
-
-            // ...|v_i_prev|v_i|v_i_next|...|v_j_prev|v_j|v_j_next|... -> ...|v_i_prev|v_j|v_i_next|...|v_j_prev|v_i|v_j_next|...
-            else 
-            {
-                int vertex_j_prev = solution.sequence[j-1];
-
-                // (|v_i_prev|v_i| + |v_i|v_i_next|) + (|v_j_prev|v_j| + |v_j|v_j_next|)
-                currentCost = (adjacencyMatrix[vertex_i_prev][vertex_i] + adjacencyMatrix[vertex_i][vertex_i_next])
-                            + (adjacencyMatrix[vertex_j_prev][vertex_j] + adjacencyMatrix[vertex_j][vertex_j_next]);
-
-                // (|v_i_prev|v_j| + |v_j|v_i_next|) + (|v_j_prev|v_i| + |v_i|v_j_next|)
-                swapCost = (adjacencyMatrix[vertex_i_prev][vertex_j] + adjacencyMatrix[vertex_j][vertex_i_next]) 
-                         + (adjacencyMatrix[vertex_j_prev][vertex_i] + adjacencyMatrix[vertex_i][vertex_j_next]);
-            }
-
-            double delta = swapCost - currentCost;
+            double delta = calculateSwapCost(solution.sequence, i, j, adjacencyMatrix);
 
             if (delta < bestDelta)
             {
@@ -115,7 +86,7 @@ bool bestImprovementSwap(Solution &solution, double **adjacencyMatrix)
 
     if (bestDelta < 0)
     {
-        std::swap(solution.sequence[best_i], solution.sequence[best_j]);
+        executeSwap(solution.sequence, best_i, best_j);
         solution.cost += bestDelta;
 
         return true;
@@ -123,6 +94,50 @@ bool bestImprovementSwap(Solution &solution, double **adjacencyMatrix)
 
     return false;
 }
+
+double calculateSwapCost(std::vector<int> &sequence, int i, int j, double **adjacencyMatrix)
+{
+    int vertex_i = sequence[i];
+    int vertex_i_prev = sequence[i-1];
+
+    int vertex_j = sequence[j];
+    int vertex_j_next = sequence[j+1];
+    
+    double currentCost, swapCost;
+
+    // ...|v_i_prev|v_i|v_j|v_j_next|... -> ...|v_i_prev|v_j|v_i|v_j_next|...
+    if (i + 1 == j) 
+    {
+        // |v_i_prev|v_i| + |v_j|v_j_next|
+        currentCost = adjacencyMatrix[vertex_i_prev][vertex_i] + adjacencyMatrix[vertex_j][vertex_j_next];
+
+        // |v_i_prev|v_j| + |v_i|v_j_next|
+        swapCost = adjacencyMatrix[vertex_i][vertex_j_next] + adjacencyMatrix[vertex_i_prev][vertex_j];
+    } 
+
+    // ...|v_i_prev|v_i|v_i_next|...|v_j_prev|v_j|v_j_next|... -> ...|v_i_prev|v_j|v_i_next|...|v_j_prev|v_i|v_j_next|...
+    else 
+    {
+        int vertex_i_next = sequence[i+1];
+        int vertex_j_prev = sequence[j-1];
+
+        // (|v_i_prev|v_i| + |v_i|v_i_next|) + (|v_j_prev|v_j| + |v_j|v_j_next|)
+        currentCost = adjacencyMatrix[vertex_i_prev][vertex_i] + adjacencyMatrix[vertex_i][vertex_i_next]
+                    + adjacencyMatrix[vertex_j_prev][vertex_j] + adjacencyMatrix[vertex_j][vertex_j_next];
+
+        // (|v_i_prev|v_j| + |v_j|v_i_next|) + (|v_j_prev|v_i| + |v_i|v_j_next|)
+        swapCost = adjacencyMatrix[vertex_i_prev][vertex_j] + adjacencyMatrix[vertex_j][vertex_i_next]
+                 + adjacencyMatrix[vertex_j_prev][vertex_i] + adjacencyMatrix[vertex_i][vertex_j_next];
+    }
+
+    return swapCost - currentCost;
+}
+
+void executeSwap(std::vector<int> &sequence, int best_i, int best_j)
+{
+    std::swap(sequence[best_i], sequence[best_j]);
+}
+
 
 
 void execute2OPT(Solution &solution, int start, int end)
@@ -146,8 +161,7 @@ double calculate2OPTCost(Solution &solution, int start, int end, double **adjace
 bool bestImprovement2OPT(Solution &solution, double **adjacencyMatrix)
 {
     double bestDelta = 0;
-    int bestStart = 0;
-    int bestEnd = 0;
+    int bestStart = 0, bestEnd = 0;
 
     for (size_t start = 0; start < solution.sequence.size() - 2; start++)
     {
@@ -225,7 +239,8 @@ double calculateOROPTCost(Solution &solution, int initial, int destiny, int n, d
 
 bool bestImprovementOROPT(Solution &solution, int n, double **adjacencyMatrix)
 {
-    double bestDelta = 0, bestInitial = 0, bestDestiny = 0;
+    double bestDelta = 0;
+    int bestInitial = 0, bestDestiny = 0;
     
     for (size_t initial = 1; initial < solution.sequence.size() - n; initial++)
     {
