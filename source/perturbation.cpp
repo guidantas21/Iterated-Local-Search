@@ -1,6 +1,6 @@
 #include "perturbation.hpp"
 
-double calculatePerturbationCost(Solution &solution, int posA, int sizeA, int posB, int sizeB, double **adjacencyMatrix);
+double calculatePerturbationCost(std::vector<int> &sequence, int posA, int sizeA, int posB, int sizeB, double **adjacencyMatrix);
 
 Solution perturbation(Solution &solution, double **adjacencyMatrix)
 {
@@ -29,10 +29,10 @@ Solution perturbation(Solution &solution, double **adjacencyMatrix)
 
     Solution newSolution = solution;
 
-    double delta = calculatePerturbationCost(solution, posA, sizeA, posB, sizeB, adjacencyMatrix);
+    double delta = calculatePerturbationCost(solution.sequence, posA, sizeA, posB, sizeB, adjacencyMatrix);
     newSolution.cost += delta;
 
-    
+
     int smallestSegment = std::min(sizeA, sizeB);
 
     for (int i = 0; i < smallestSegment; i++)
@@ -82,15 +82,15 @@ Solution perturbation(Solution &solution, double **adjacencyMatrix)
     return newSolution;
 }
 
-double calculatePerturbationCost(Solution &solution, int posA, int sizeA, int posB, int sizeB, double **adjacencyMatrix)
+double calculatePerturbationCost(std::vector<int> &sequence, int posA, int sizeA, int posB, int sizeB, double **adjacencyMatrix)
 {
-    int vertex_posA = solution.sequence[posA];
-    int vertex_posA_prev = solution.sequence[posA-1];
-    int vertex_posA_last = solution.sequence[posA+sizeA-1];
+    int vertex_posA = sequence[posA];
+    int vertex_posA_prev = sequence[posA-1];
+    int vertex_posA_last = sequence[posA+sizeA-1];
 
-    int vertex_posB = solution.sequence[posB];
-    int vertex_posB_last = solution.sequence[posB+sizeB-1];
-    int vertex_posB_last_next = solution.sequence[posB+sizeB];
+    int vertex_posB = sequence[posB];
+    int vertex_posB_last = sequence[posB+sizeB-1];
+    int vertex_posB_last_next = sequence[posB+sizeB];
 
     int currentCost, perturbationCost;
 
@@ -106,8 +106,8 @@ double calculatePerturbationCost(Solution &solution, int posA, int sizeA, int po
     }
     else
     {
-        int vertex_posA_last_next = solution.sequence[posA+sizeA];
-        int vertex_posB_prev = solution.sequence[posB-1];
+        int vertex_posA_last_next = sequence[posA+sizeA];
+        int vertex_posB_prev = sequence[posB-1];
         
         currentCost = adjacencyMatrix[vertex_posA_prev][vertex_posA]
                     + adjacencyMatrix[vertex_posA_last][vertex_posA_last_next]
