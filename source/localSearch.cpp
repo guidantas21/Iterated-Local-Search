@@ -23,7 +23,7 @@ void localSearch(Solution *solution, double **adjacencyMatrix)
     std::vector<int> neighborsList = { 1, 2, 3, 4, 5 };
     bool improved = false;
 
-    std::cout << solution->cost << '\n';
+    // std::cout << solution->cost << '\n';
 
     while (neighborsList.empty() == false)
     {

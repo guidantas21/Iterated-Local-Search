@@ -16,7 +16,6 @@ Solution ILS(double **adjacencyMatrix, size_t size, int maxIterations, int maxIt
 
         Solution bestOfIteraction = currentSolution;
 
-
         int iterationsILS = 0;
 
         while (iterationsILS <= maxIterationsILS)
@@ -29,10 +28,21 @@ Solution ILS(double **adjacencyMatrix, size_t size, int maxIterations, int maxIt
                 iterationsILS = 0;
             }
 
-            // currentSolution = pertubation(); // To implement
+            // if (iterationsILS < 50)
+            // {
+            //     std::cout << "b" << currentSolution.cost << std::endl;
+            //     // printSolution(currentSolution);
+            // }
+
+            currentSolution = perturbation(bestOfIteraction, adjacencyMatrix); // To implement    
+            // if (iterationsILS < 50)
+            // {
+                // std::cout << currentSolution.cost << std::endl;
+            //     // printSolution(currentSolution);
+            // }
             iterationsILS++;
 
-            std::cout << "Best Iteration Cost: " << bestOfIteraction.cost << '\n';
+            // std::cout << "Best Iteration Cost: " << bestOfIteraction.cost << '\n';
         }
 
         if (bestOfIteraction.cost < bestOfAll.cost)

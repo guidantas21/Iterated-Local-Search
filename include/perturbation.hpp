@@ -6,7 +6,8 @@
 #include <vector>
 
 #include "solution.hpp"
+#include "construction.hpp"
 
-Solution pertubation();
+Solution perturbation(Solution &solution, double **adjacencyMatrix);
 
 #endif
