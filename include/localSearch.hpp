@@ -9,6 +9,6 @@
 #include "solution.hpp"
 #include "construction.hpp"
 
-void localSearch(Solution *solution, double **adjacencyMatrix);
+void localSearch(Solution &solution, double **adjacencyMatrix);
 
 #endif

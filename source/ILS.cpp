@@ -20,7 +20,7 @@ Solution ILS(double **adjacencyMatrix, size_t size, int maxIterations, int maxIt
 
         while (iterationsILS <= maxIterationsILS)
         {
-            localSearch(&currentSolution, adjacencyMatrix); // implementing
+            localSearch(currentSolution, adjacencyMatrix);
 
             if (currentSolution.cost < bestOfIteraction.cost)
             {
@@ -28,21 +28,9 @@ Solution ILS(double **adjacencyMatrix, size_t size, int maxIterations, int maxIt
                 iterationsILS = 0;
             }
 
-            // if (iterationsILS < 50)
-            // {
-            //     std::cout << "b" << currentSolution.cost << std::endl;
-            //     // printSolution(currentSolution);
-            // }
+            currentSolution = perturbation(bestOfIteraction, adjacencyMatrix);   
 
-            currentSolution = perturbation(bestOfIteraction, adjacencyMatrix); // To implement    
-            // if (iterationsILS < 50)
-            // {
-                // std::cout << currentSolution.cost << std::endl;
-            //     // printSolution(currentSolution);
-            // }
             iterationsILS++;
-
-            // std::cout << "Best Iteration Cost: " << bestOfIteraction.cost << '\n';
         }
 
         if (bestOfIteraction.cost < bestOfAll.cost)
