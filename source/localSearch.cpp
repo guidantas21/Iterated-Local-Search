@@ -176,13 +176,37 @@ bool bestImprovement2OPT(Solution *solution, double **adjacencyMatrix)
     return false;
 }
 
-// OPTIMIZE
 void executeOROPT(Solution *solution, int initial, int destiny, int n) {
-    for (int i = 0; i < n; i++) {
-        for (int j = initial; j < destiny; j++)
+    std::vector<int> segment(n);
+
+    for (int i = 0; i < n; i++)
+    {
+        segment[i] = solution->sequence[initial + i];
+    }	
+    
+    if (initial < destiny)
+    {
+        for (int i = initial + n; i <= destiny; i++)
         {
-            std::swap(solution->sequence[j], solution->sequence[j+1]);
-        }   
+            solution->sequence[i-n] = solution->sequence[i];
+        }
+
+        for (int i = 0; i < n; i++)
+        {
+            solution->sequence[destiny - n + i + 1] = segment[i];
+        }
+    } 
+    else 
+    {
+        for (int i = initial - 1; i > destiny; i--)
+        {
+            solution->sequence[i + n] = solution->sequence[i];
+        }
+
+        for (int i = 0; i < n; i++)
+        {
+            solution->sequence[destiny + i + 1] = segment[i];
+        }
     }
 }
 
@@ -201,13 +225,23 @@ double calculateOROPTCost(Solution *solution, int initial, int destiny, int n, d
 
 bool bestImprovementOROPT(Solution *solution, int n, double **adjacencyMatrix)
 {
-    double bestDelta = 0;
-    int bestInitial = 0;
-    int bestDestiny = 0;
+    double bestDelta = 0, bestInitial = 0, bestDestiny = 0;
     
-    for (size_t initial = 1; initial < solution->sequence.size() - 2; initial++)
+    for (size_t initial = 1; initial < solution->sequence.size() - n; initial++)
     {
-        for (size_t destiny = initial + n; destiny < solution->sequence.size() - 1; destiny++)
+        for (size_t destiny = initial + n; destiny < solution->sequence.size() - n; destiny++)
+        {
+            double delta = calculateOROPTCost(solution, initial, destiny, n, adjacencyMatrix);
+
+            if (delta < bestDelta)
+            {
+                bestDelta = delta;
+                bestInitial = initial;
+                bestDestiny = destiny;
+            } 
+        }
+
+        for (size_t destiny = 0; destiny < initial - 1; destiny++)
         {
             double delta = calculateOROPTCost(solution, initial, destiny, n, adjacencyMatrix);
 
