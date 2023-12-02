@@ -10,9 +10,9 @@ double calculateSwapCost(std::vector<int> &sequence, int i, int j, double **adja
 
 bool bestImprovement2OPT(Solution &solution, double **adjacencyMatrix);
 
-void execute2OPT(Solution &solution, int start, int end);
+void execute2OPT(std::vector<int> &sequence, int start, int end);
 
-double calculate2OPTCost(Solution &solution, int start, int end, double **adjacencyMatrix);
+double calculate2OPTCost(std::vector<int> &sequence, int start, int end, double **adjacencyMatrix);
 
 
 bool bestImprovementOROPT(Solution &solution, int n, double **adjacencyMatrix);
@@ -67,11 +67,11 @@ bool bestImprovementSwap(Solution &solution, double **adjacencyMatrix)
     double bestDelta = 0;
     int best_i = 0, best_j = 0;
 
-    size_t swapRange = solution.sequence.size() - 1;
+    size_t range = solution.sequence.size() - 1;
 
-    for (size_t i = 1; i < swapRange; i++)
+    for (size_t i = 1; i < range; i++)
     {
-        for (size_t j = i + 1; j < swapRange; j++)
+        for (size_t j = i + 1; j < range; j++)
         {
             double delta = calculateSwapCost(solution.sequence, i, j, adjacencyMatrix);
 
@@ -140,34 +140,18 @@ void executeSwap(std::vector<int> &sequence, int best_i, int best_j)
 
 
 
-void execute2OPT(Solution &solution, int start, int end)
-{
-    std::reverse(solution.sequence.begin() + start + 1, solution.sequence.begin() + end + 1);
-}
-
-double calculate2OPTCost(Solution &solution, int start, int end, double **adjacencyMatrix)
-{
-    // 1, ..., <start>, <start+1>, ... ,  <end>, <end+1>, ..., 1
-    double currentCost = adjacencyMatrix[solution.sequence[start]][solution.sequence[start+1]]
-                       + adjacencyMatrix[solution.sequence[end]][solution.sequence[end+1]];
-
-    // 1, ..., <start+1>, <end+1>, ... ,  <start>, <end>, ..., 1
-    double swapCost = adjacencyMatrix[solution.sequence[start+1]][solution.sequence[end+1]] 
-                    + adjacencyMatrix[solution.sequence[start]][solution.sequence[end]];
-
-    return swapCost - currentCost;
-}
-
 bool bestImprovement2OPT(Solution &solution, double **adjacencyMatrix)
 {
     double bestDelta = 0;
     int bestStart = 0, bestEnd = 0;
 
-    for (size_t start = 0; start < solution.sequence.size() - 2; start++)
+    size_t range = solution.sequence.size() - 1;
+
+    for (size_t start = 0; start < range - 1; start++)
     {
-        for (size_t end = start + 1; end < solution.sequence.size() - 1; end++)
+        for (size_t end = start + 1; end < range; end++)
         {
-            double delta = calculate2OPTCost(solution, start, end, adjacencyMatrix);
+            double delta = calculate2OPTCost(solution.sequence, start, end, adjacencyMatrix);
             
             if (delta < bestDelta)
             {
@@ -180,7 +164,7 @@ bool bestImprovement2OPT(Solution &solution, double **adjacencyMatrix)
 
     if (bestDelta < 0)
     {
-        execute2OPT(solution, bestStart, bestEnd);
+        execute2OPT(solution.sequence, bestStart, bestEnd);
 
         solution.cost += bestDelta;
 
@@ -189,6 +173,32 @@ bool bestImprovement2OPT(Solution &solution, double **adjacencyMatrix)
 
     return false;
 }
+
+double calculate2OPTCost(std::vector<int> &sequence, int start, int end, double **adjacencyMatrix)
+{
+    int vertex_start = sequence[start];
+    int vertex_start_next = sequence[start+1];
+
+    int vertex_end = sequence[end];
+    int vertex_end_next = sequence[end+1];
+
+    // 1, ..., <start>, <start+1>, ... ,  <end>, <end+1>, ..., 1
+    double currentCost = adjacencyMatrix[vertex_start][vertex_start_next]
+                       + adjacencyMatrix[vertex_end][vertex_end_next];
+
+    // 1, ..., <start+1>, <end+1>, ... ,  <start>, <end>, ..., 1
+    double _2OPTCost = adjacencyMatrix[vertex_start_next][vertex_end_next] 
+                     + adjacencyMatrix[vertex_start][vertex_end];
+
+    return _2OPTCost - currentCost;
+}
+
+void execute2OPT(std::vector<int> &sequence, int start, int end)
+{
+    std::reverse(sequence.begin() + start + 1, sequence.begin() + end + 1);
+}
+
+
 
 void executeOROPT(Solution &solution, int initial, int destiny, int n) {
     std::vector<int> segment(n);
