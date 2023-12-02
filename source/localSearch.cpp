@@ -15,11 +15,11 @@ void execute2OPT(std::vector<int> &sequence, int start, int end);
 double calculate2OPTCost(std::vector<int> &sequence, int start, int end, double **adjacencyMatrix);
 
 
-bool bestImprovementOROPT(Solution &solution, int n, double **adjacencyMatrix);
+bool bestImprovementOROPT(Solution &solution, int segmentSize, double **adjacencyMatrix);
 
-void executeOROPT(Solution &solution, int initial, int destiny, int n);
+void executeOROPT(std::vector<int> &sequence, int initial, int destiny, int segmentSize);
 
-double calculateOROPTCost(Solution &solution, int initial, int destiny, int n, double **adjacencyMatrix);
+double calculateOROPTCost(std::vector<int> &sequence, int initial, int destiny, int segmentSize, double **adjacencyMatrix);
 
 
 
@@ -30,9 +30,9 @@ void localSearch(Solution &solution, double **adjacencyMatrix)
 
     while (neighborsList.empty() == false)
     {
-        int n = getRandomNumber(0, neighborsList.size()-1);
+        int neighborIndex = getRandomNumber(0, neighborsList.size()-1);
 
-        switch (neighborsList[n])
+        switch (neighborsList[neighborIndex])
         {
             case 1:
                 improved = bestImprovementSwap(solution, adjacencyMatrix);
@@ -56,10 +56,9 @@ void localSearch(Solution &solution, double **adjacencyMatrix)
             neighborsList = { 1, 2, 3, 4, 5 };
         } 
         else {
-            neighborsList.erase(neighborsList.begin() + n);
+            neighborsList.erase(neighborsList.begin() + neighborIndex);
         }
     }
-    return;
 }
 
 bool bestImprovementSwap(Solution &solution, double **adjacencyMatrix)
@@ -91,7 +90,6 @@ bool bestImprovementSwap(Solution &solution, double **adjacencyMatrix)
 
         return true;
     }
-
     return false;
 }
 
@@ -105,31 +103,23 @@ double calculateSwapCost(std::vector<int> &sequence, int i, int j, double **adja
     
     double currentCost, swapCost;
 
-    // ...|v_i_prev|v_i|v_j|v_j_next|... -> ...|v_i_prev|v_j|v_i|v_j_next|...
     if (i + 1 == j) 
     {
-        // |v_i_prev|v_i| + |v_j|v_j_next|
         currentCost = adjacencyMatrix[vertex_i_prev][vertex_i] + adjacencyMatrix[vertex_j][vertex_j_next];
 
-        // |v_i_prev|v_j| + |v_i|v_j_next|
         swapCost = adjacencyMatrix[vertex_i][vertex_j_next] + adjacencyMatrix[vertex_i_prev][vertex_j];
     } 
-
-    // ...|v_i_prev|v_i|v_i_next|...|v_j_prev|v_j|v_j_next|... -> ...|v_i_prev|v_j|v_i_next|...|v_j_prev|v_i|v_j_next|...
     else 
     {
         int vertex_i_next = sequence[i+1];
         int vertex_j_prev = sequence[j-1];
 
-        // (|v_i_prev|v_i| + |v_i|v_i_next|) + (|v_j_prev|v_j| + |v_j|v_j_next|)
         currentCost = adjacencyMatrix[vertex_i_prev][vertex_i] + adjacencyMatrix[vertex_i][vertex_i_next]
                     + adjacencyMatrix[vertex_j_prev][vertex_j] + adjacencyMatrix[vertex_j][vertex_j_next];
 
-        // (|v_i_prev|v_j| + |v_j|v_i_next|) + (|v_j_prev|v_i| + |v_i|v_j_next|)
         swapCost = adjacencyMatrix[vertex_i_prev][vertex_j] + adjacencyMatrix[vertex_j][vertex_i_next]
                  + adjacencyMatrix[vertex_j_prev][vertex_i] + adjacencyMatrix[vertex_i][vertex_j_next];
     }
-
     return swapCost - currentCost;
 }
 
@@ -137,6 +127,7 @@ void executeSwap(std::vector<int> &sequence, int best_i, int best_j)
 {
     std::swap(sequence[best_i], sequence[best_j]);
 }
+
 
 
 
@@ -165,12 +156,10 @@ bool bestImprovement2OPT(Solution &solution, double **adjacencyMatrix)
     if (bestDelta < 0)
     {
         execute2OPT(solution.sequence, bestStart, bestEnd);
-
         solution.cost += bestDelta;
 
         return true;
     }
-
     return false;
 }
 
@@ -182,15 +171,13 @@ double calculate2OPTCost(std::vector<int> &sequence, int start, int end, double 
     int vertex_end = sequence[end];
     int vertex_end_next = sequence[end+1];
 
-    // 1, ..., <start>, <start+1>, ... ,  <end>, <end+1>, ..., 1
     double currentCost = adjacencyMatrix[vertex_start][vertex_start_next]
                        + adjacencyMatrix[vertex_end][vertex_end_next];
 
-    // 1, ..., <start+1>, <end+1>, ... ,  <start>, <end>, ..., 1
-    double _2OPTCost = adjacencyMatrix[vertex_start_next][vertex_end_next] 
+    double _2optCost = adjacencyMatrix[vertex_start_next][vertex_end_next] 
                      + adjacencyMatrix[vertex_start][vertex_end];
 
-    return _2OPTCost - currentCost;
+    return _2optCost - currentCost;
 }
 
 void execute2OPT(std::vector<int> &sequence, int start, int end)
@@ -200,63 +187,19 @@ void execute2OPT(std::vector<int> &sequence, int start, int end)
 
 
 
-void executeOROPT(Solution &solution, int initial, int destiny, int n) {
-    std::vector<int> segment(n);
 
-    for (int i = 0; i < n; i++)
-    {
-        segment[i] = solution.sequence[initial + i];
-    }	
-    
-    if (initial < destiny)
-    {
-        for (int i = initial + n; i <= destiny; i++)
-        {
-            solution.sequence[i-n] = solution.sequence[i];
-        }
-
-        for (int i = 0; i < n; i++)
-        {
-            solution.sequence[destiny - n + i + 1] = segment[i];
-        }
-    } 
-    else 
-    {
-        for (int i = initial - 1; i > destiny; i--)
-        {
-            solution.sequence[i + n] = solution.sequence[i];
-        }
-
-        for (int i = 0; i < n; i++)
-        {
-            solution.sequence[destiny + i + 1] = segment[i];
-        }
-    }
-}
-
-double calculateOROPTCost(Solution &solution, int initial, int destiny, int n, double **adjacencyMatrix)
-{
-    double currentCost = adjacencyMatrix[solution.sequence[initial-1]][solution.sequence[initial]] 
-                       + adjacencyMatrix[solution.sequence[initial+n-1]][solution.sequence[initial+n]]
-                       + adjacencyMatrix[solution.sequence[destiny]][solution.sequence[destiny+1]];
-
-    double swapCost = adjacencyMatrix[solution.sequence[initial-1]][solution.sequence[initial+n]] 
-                    + adjacencyMatrix[solution.sequence[destiny]][solution.sequence[initial]]
-                    + adjacencyMatrix[solution.sequence[initial+n-1]][solution.sequence[destiny+1]];
-
-    return swapCost - currentCost;
-}
-
-bool bestImprovementOROPT(Solution &solution, int n, double **adjacencyMatrix)
+bool bestImprovementOROPT(Solution &solution, int segmentSize, double **adjacencyMatrix)
 {
     double bestDelta = 0;
     int bestInitial = 0, bestDestiny = 0;
+
+    size_t range = solution.sequence.size() - segmentSize;
     
-    for (size_t initial = 1; initial < solution.sequence.size() - n; initial++)
+    for (size_t initial = 1; initial < range; initial++)
     {
-        for (size_t destiny = initial + n; destiny < solution.sequence.size() - n; destiny++)
+        for (size_t destiny = initial + segmentSize; destiny < range; destiny++)
         {
-            double delta = calculateOROPTCost(solution, initial, destiny, n, adjacencyMatrix);
+            double delta = calculateOROPTCost(solution.sequence, initial, destiny, segmentSize, adjacencyMatrix);
 
             if (delta < bestDelta)
             {
@@ -265,10 +208,9 @@ bool bestImprovementOROPT(Solution &solution, int n, double **adjacencyMatrix)
                 bestDestiny = destiny;
             } 
         }
-
         for (size_t destiny = 0; destiny < initial - 1; destiny++)
         {
-            double delta = calculateOROPTCost(solution, initial, destiny, n, adjacencyMatrix);
+            double delta = calculateOROPTCost(solution.sequence, initial, destiny, segmentSize, adjacencyMatrix);
 
             if (delta < bestDelta)
             {
@@ -281,11 +223,63 @@ bool bestImprovementOROPT(Solution &solution, int n, double **adjacencyMatrix)
 
     if (bestDelta < 0)
     {
-        executeOROPT(solution, bestInitial, bestDestiny, n);
+        executeOROPT(solution.sequence, bestInitial, bestDestiny, segmentSize);
         solution.cost += bestDelta;
 
         return true;
     }
-
     return false;
+}
+
+double calculateOROPTCost(std::vector<int> &sequence, int initial, int destiny, int segmentSize, double **adjacencyMatrix)
+{
+    int vertex_initial_prev = sequence[initial - 1];
+    int vertex_initial = sequence[initial];
+    int vertex_initial_last = sequence[initial + segmentSize - 1];
+    int vertex_initial_last_next = sequence[initial + segmentSize];
+
+    int vertex_destiny = sequence[destiny];
+    int vertex_destiny_next = sequence[destiny + 1];
+
+    double currentCost = adjacencyMatrix[vertex_initial_prev][vertex_initial] 
+                       + adjacencyMatrix[vertex_initial_last][vertex_initial_last_next]
+                       + adjacencyMatrix[vertex_destiny][vertex_destiny_next];
+
+    double orOptCost = adjacencyMatrix[vertex_initial_prev][vertex_initial_last_next] 
+                     + adjacencyMatrix[vertex_destiny][vertex_initial]
+                     + adjacencyMatrix[vertex_initial_last][vertex_destiny_next];
+
+    return orOptCost - currentCost;
+}
+
+void executeOROPT(std::vector<int> &sequence, int initial, int destiny, int segmentSize) {
+    std::vector<int> segment(segmentSize);
+
+    for (int i = 0; i < segmentSize; i++)
+    {
+        segment[i] = sequence[initial + i];
+    }	
+    if (initial < destiny)
+    {
+        for (int i = initial + segmentSize; i <= destiny; i++)
+        {
+            sequence[i - segmentSize] = sequence[i];
+        }
+        for (int i = 0; i < segmentSize; i++)
+        {
+            sequence[destiny - segmentSize + i + 1] = segment[i];
+        }
+    } 
+    else 
+    {
+        for (int i = initial - 1; i > destiny; i--)
+        {
+            sequence[i + segmentSize] = sequence[i];
+        }
+
+        for (int i = 0; i < segmentSize; i++)
+        {
+            sequence[destiny + i + 1] = segment[i];
+        }
+    }
 }

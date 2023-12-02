@@ -4,78 +4,81 @@ double calculatePerturbationCost(Solution &solution, int posA, int sizeA, int po
 
 Solution perturbation(Solution &solution, double **adjacencyMatrix)
 {
-    int smallestSegment = std::min(2, (int) std::ceil(solution.sequence.size() / 10.0f));
+    int sequenceSize = solution.sequence.size();
 
-    int sizeA = getRandomNumber(smallestSegment, (std::ceil(solution.sequence.size() / 10.0f) + 2) - smallestSegment);
-    int sizeB = getRandomNumber(smallestSegment, (std::ceil(solution.sequence.size() / 10.0f) + 2) - smallestSegment);
+    int sizeLimit1 = (int) std::ceil(sequenceSize / 10.0f);
+    int sizeLimit2 = 2;
 
-    int posA = getRandomNumber(1, (solution.sequence.size() - 1) - sizeA - sizeB);
-    int posB = getRandomNumber(posA + sizeA, (solution.sequence.size() - 1) - sizeB);
+    int minPossibleSize = std::min(sizeLimit2, sizeLimit1);
+    int maxPossibleSize = sizeLimit1 + sizeLimit2 - minPossibleSize;
 
-    // std::cout << posA << ' ' << sizeA << std::endl;
-    // std::cout << posB << ' ' << sizeB << std::endl;
+    int sizeA = getRandomNumber(minPossibleSize, maxPossibleSize);
+    int sizeB = getRandomNumber(minPossibleSize, maxPossibleSize);
 
-    // std::cout << "s" <<solution.cost << std::endl;
+
+    int firstPossiblePosA = 1;
+    int lastPossiblePosA = (sequenceSize - 1) - sizeA - sizeB;
+
+    int posA = getRandomNumber(firstPossiblePosA, lastPossiblePosA);
+
+    int firstPossiblePosB = posA + sizeA;
+    int lastPossiblePosB = (sequenceSize - 1) - sizeB;
+    
+    int posB = getRandomNumber(firstPossiblePosB, lastPossiblePosB);
+
 
     Solution newSolution = solution;
 
     double delta = calculatePerturbationCost(solution, posA, sizeA, posB, sizeB, adjacencyMatrix);
-
     newSolution.cost += delta;
 
-    int small = std::min(sizeA, sizeB);
+    
+    int smallestSegment = std::min(sizeA, sizeB);
 
-    for (int i = 0; i < small; i++)
+    for (int i = 0; i < smallestSegment; i++)
     {
         std::swap(newSolution.sequence[posA + i], newSolution.sequence[posB + i]);
     }
 
-    int difference = std::abs(sizeA - sizeB);
 
-    std::vector<int> remainingSegment(difference);
+    int sizeDifference = std::abs(sizeA - sizeB);
+
+    std::vector<int> remainingSegment(sizeDifference);
 
     if (sizeA > sizeB)
     {
-        for (int i = 0; i < difference; i++)
+        for (int i = 0; i < sizeDifference; i++)
         {
             remainingSegment[i] = newSolution.sequence[posA + sizeB + i];
         }
 
         for (int i = posA + sizeA; i < posB + sizeB; i++)
         {
-            newSolution.sequence[i - difference] = newSolution.sequence[i];
+            newSolution.sequence[i - sizeDifference] = newSolution.sequence[i];
         }
 
-        for (int i = 0; i < difference; i++)
+        for (int i = 0; i < sizeDifference; i++)
         {
-            newSolution.sequence[posB +sizeB - difference + i] = remainingSegment[i];
+            newSolution.sequence[posB + sizeB - sizeDifference + i] = remainingSegment[i];
         }
     }
-
     else if (sizeA < sizeB)
     {
-        for (int i = 0; i < difference; i++)
+        for (int i = 0; i < sizeDifference; i++)
         {
             remainingSegment[i] = newSolution.sequence[posB + sizeA + i];
         }
 
         for (int i = posB + sizeA - 1; i >= posA + sizeA ; i--)
         {
-            newSolution.sequence[i + difference] = newSolution.sequence[i];
+            newSolution.sequence[i + sizeDifference] = newSolution.sequence[i];
         }
 
-        for (int i = 0; i < difference; i++)
+        for (int i = 0; i < sizeDifference; i++)
         {
             newSolution.sequence[posA + sizeA + i] = remainingSegment[i];
         }
     }
-
-    // std::cout << "n" << newSolution.cost << std::endl;
-
-    // calculateCost(&newSolution, adjacencyMatrix);
-
-    // std::cout << "fdf" << newSolution.cost << std::endl;
-
     return newSolution;
 }
 
@@ -98,25 +101,23 @@ double calculatePerturbationCost(Solution &solution, int posA, int sizeA, int po
             	    + adjacencyMatrix[vertex_posB_last][vertex_posB_last_next];
 
         perturbationCost = adjacencyMatrix[vertex_posA_prev][vertex_posB]
-                        + adjacencyMatrix[vertex_posB_last][vertex_posA]
-                        + adjacencyMatrix[vertex_posA_last][vertex_posB_last_next];
+                         + adjacencyMatrix[vertex_posB_last][vertex_posA]
+                         + adjacencyMatrix[vertex_posA_last][vertex_posB_last_next];
     }
     else
     {
         int vertex_posA_last_next = solution.sequence[posA+sizeA];
         int vertex_posB_prev = solution.sequence[posB-1];
         
+        currentCost = adjacencyMatrix[vertex_posA_prev][vertex_posA]
+                    + adjacencyMatrix[vertex_posA_last][vertex_posA_last_next]
+                    + adjacencyMatrix[vertex_posB_prev][vertex_posB]
+                    + adjacencyMatrix[vertex_posB_last][vertex_posB_last_next];
 
-        currentCost = adjacencyMatrix[vertex_posA_prev][vertex_posA] // r
-                    + adjacencyMatrix[vertex_posA_last][vertex_posA_last_next] // r
-                    + adjacencyMatrix[vertex_posB_prev][vertex_posB] // r
-                    + adjacencyMatrix[vertex_posB_last][vertex_posB_last_next]; // r
-
-        perturbationCost = adjacencyMatrix[vertex_posB_prev][vertex_posA] // r
-                        + adjacencyMatrix[vertex_posA_last][vertex_posB_last_next] // r
-                        + adjacencyMatrix[vertex_posA_prev][vertex_posB] // r
-                        + adjacencyMatrix[vertex_posB_last][vertex_posA_last_next]; // r
+        perturbationCost = adjacencyMatrix[vertex_posB_prev][vertex_posA] 
+                         + adjacencyMatrix[vertex_posA_last][vertex_posB_last_next] 
+                         + adjacencyMatrix[vertex_posA_prev][vertex_posB] 
+                         + adjacencyMatrix[vertex_posB_last][vertex_posA_last_next]; 
     }
-
     return perturbationCost - currentCost;
 }
