@@ -17,7 +17,7 @@ add_executable(${PROJECT_NAME} ${SOURCES})
 target_compile_options(${PROJECT_NAME} PRIVATE
     -Wall
     -Wextra
-    -O2
+    -O3
 )
 
 # Set linker flags (example flags, replace with your desired flags)

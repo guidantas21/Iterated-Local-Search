@@ -2,34 +2,36 @@
 
 double calculatePerturbationCost(std::vector<int> &sequence, int posA, int sizeA, int posB, int sizeB, double **adjacencyMatrix);
 
+int randomNumber(int minLimit, int maxLimit);
+
 Solution perturbation(Solution &solution, double **adjacencyMatrix)
 {
     int sequenceSize = solution.sequence.size();
 
-    int sizeLimit1 = (int) std::ceil(sequenceSize / 10.0f);
-    int sizeLimit2 = 2;
+    int maxLimit = std::ceil(sequenceSize / 10.0f);
+    int minLimit = 2;
 
-    int minPossibleSize = std::min(sizeLimit2, sizeLimit1);
-    int maxPossibleSize = sizeLimit1 + sizeLimit2 - minPossibleSize;
+    int range = sequenceSize - 1;
 
-    int sizeA = getRandomNumber(minPossibleSize, maxPossibleSize);
-    int sizeB = getRandomNumber(minPossibleSize, maxPossibleSize);
 
+    int sizeA = randomNumber(minLimit, maxLimit);
+    int sizeB = randomNumber(minLimit, maxLimit);
 
     int firstPossiblePosA = 1;
-    int lastPossiblePosA = (sequenceSize - 1) - sizeA - sizeB;
+    int lastPossiblePosA = range - sizeA - sizeB + 1;
 
-    int posA = getRandomNumber(firstPossiblePosA, lastPossiblePosA);
+
+    int posA = randomNumber(firstPossiblePosA, lastPossiblePosA);
 
     int firstPossiblePosB = posA + sizeA;
-    int lastPossiblePosB = (sequenceSize - 1) - sizeB;
-    
-    int posB = getRandomNumber(firstPossiblePosB, lastPossiblePosB);
+    int lastPossiblePosB = range - sizeB + 1;
 
+    int posB = randomNumber(firstPossiblePosB, lastPossiblePosB);
+
+    double delta = calculatePerturbationCost(solution.sequence, posA, sizeA, posB, sizeB, adjacencyMatrix);
 
     Solution newSolution = solution;
 
-    double delta = calculatePerturbationCost(solution.sequence, posA, sizeA, posB, sizeB, adjacencyMatrix);
     newSolution.cost += delta;
 
 
@@ -120,4 +122,15 @@ double calculatePerturbationCost(std::vector<int> &sequence, int posA, int sizeA
                          + adjacencyMatrix[vertex_posB_last][vertex_posA_last_next]; 
     }
     return perturbationCost - currentCost;
+}
+
+int randomNumber(int minLimit, int maxLimit)
+{
+
+    if (minLimit == maxLimit)
+    {
+        return minLimit;
+    }
+
+    return minLimit + (std::rand() % (maxLimit - minLimit));
 }

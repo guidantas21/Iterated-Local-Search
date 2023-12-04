@@ -2,6 +2,8 @@
 #include <vector>
 #include <chrono>
 #include <iomanip>
+#include <cstdlib>
+#include <ctime> 
 
 #include "ILS.hpp"
 #include "solution.hpp"
@@ -9,6 +11,8 @@
 
 int main(int argc, char** argv)
 {
+    std::srand(std::time(0));
+
     ////////// LOAD DATA //////////
 
     auto data = Data(argc, argv[1]);
@@ -48,7 +52,7 @@ int main(int argc, char** argv)
 
     std::cout << "Soluion cost: " << solution.cost << std::endl;
     
-    calculateCost(&solution, data.getMatrixCost());
+    calculateCost(solution, data.getMatrixCost());
     std::cout << "Soluion cost (correct): " << solution.cost << std::endl;
 
 

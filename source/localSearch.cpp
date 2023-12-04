@@ -30,7 +30,7 @@ void localSearch(Solution &solution, double **adjacencyMatrix)
 
     while (neighborsList.empty() == false)
     {
-        int neighborIndex = getRandomNumber(0, neighborsList.size()-1);
+        int neighborIndex = (int) rand() % neighborsList.size();
 
         switch (neighborsList[neighborIndex])
         {
@@ -253,13 +253,14 @@ double calculateOROPTCost(std::vector<int> &sequence, int initial, int destiny, 
 }
 
 void executeOROPT(std::vector<int> &sequence, int initial, int destiny, int segmentSize) {
-    std::vector<int> segment(segmentSize);
+    int segment[3];
 
     for (int i = 0; i < segmentSize; i++)
     {
         segment[i] = sequence[initial + i];
     }	
-    if (initial < destiny)
+
+    if (initial <= destiny)
     {
         for (int i = initial + segmentSize; i <= destiny; i++)
         {

@@ -7,8 +7,9 @@
 #include <unordered_set>
 #include <algorithm>
 #include <iostream>
-#include <random>
+#include <cstdlib>
 #include <cmath>
+#include <random>
 
 #include "solution.hpp"
 
