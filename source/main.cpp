@@ -9,6 +9,22 @@
 #include "solution.hpp"
 #include "data.hpp"
 
+struct IlsExecution {
+    Solution solution;
+    float durationSeconds;
+    bool status;
+};
+
+struct Result {
+    float averageCost;
+    float averageDurationSeconds;
+    bool status;
+};
+
+void printExecutionInfo(IlsExecution &execution);
+
+void printResult(Result &result);
+
 int main(int argc, char** argv)
 {
     std::srand(std::time(0));
@@ -27,43 +43,83 @@ int main(int argc, char** argv)
 
     data.printMatrixDist();
 
-
     ////////// ILS EXECUTION //////////
 
+    const size_t NUMBER_OF_EXECUTIONS = 10;
 
-    std::cout << "-- ILS\n"; 
+    std::vector<IlsExecution> executions(NUMBER_OF_EXECUTIONS);
 
-    auto startTimer = std::chrono::high_resolution_clock::now();
+    float sumCost = 0, sumAverageDurantionSeconds = 0;
 
-    Solution solution = ILS(data.getMatrixCost(), SIZE, MAX_ITERATIONS, MAX_ITERATIONS_ILS);
+    Result result;
+    result.status = true;
 
-    auto stopTimer = std::chrono::high_resolution_clock::now();
+    IlsExecution ilsExecution;
 
-    auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stopTimer - startTimer);
+    for (size_t i = 0; i < NUMBER_OF_EXECUTIONS; ++i)
+    {
+        std::cout << "\nExecuting ILS... (" << data.getInstanceName() << "[" << i <<"])\n"; 
 
+        auto startTimer = std::chrono::high_resolution_clock::now();
 
-    ////////// RESULTS //////////
+        ilsExecution.solution = ILS(data.getMatrixCost(), SIZE, MAX_ITERATIONS, MAX_ITERATIONS_ILS);
 
+        auto stopTimer = std::chrono::high_resolution_clock::now();
+        auto duration = std::chrono::duration_cast<std::chrono::microseconds>(stopTimer - startTimer);
 
-    std::cout << "\n-- Solution\n"; 
+        ilsExecution.durationSeconds = (float) duration.count() / 1000000.0f;
+        ilsExecution.status = isValid(ilsExecution.solution, SIZE, data.getMatrixCost());
 
-    std::cout << "\nBest tour of all:\n";
-    printSolution(solution);
-
-    std::cout << "Soluion cost: " << solution.cost << std::endl;
-    
-    calculateCost(solution, data.getMatrixCost());
-    std::cout << "Soluion cost (correct): " << solution.cost << std::endl;
-
-
-    float durationSeconds = (float) duration.count() / 1000000.0f;
-    std::cout << "ILS execution duration: " << durationSeconds << " seconds\n";
+        executions[i] = ilsExecution;
 
 
-    std::cout << "Status: ";
 
-    std::cout << (!isValid(solution, SIZE) ? "IN" : "") << "VALID SOLUTION\n";
+        sumAverageDurantionSeconds += ilsExecution.durationSeconds;
+        sumCost += ilsExecution.solution.cost;
+
+        if (ilsExecution.status == false)
+        {
+            result.status = false;
+        }
+
+
+        std::cout << "\n-- Solution (" << data.getInstanceName() << "[" << i <<"])" << std::endl; 
+
+        printExecutionInfo(ilsExecution);
+    }
+
+    ////////// RESULT //////////
+
+    result.averageCost = (float) sumCost / NUMBER_OF_EXECUTIONS;
+    result.averageDurationSeconds = (float) sumAverageDurantionSeconds / NUMBER_OF_EXECUTIONS;
+
+    std::cout << "\n-- Average result (" << data.getInstanceName() << "):" << std::endl;
+
+    printResult(result);
+
+    saveResults();
 
     return 0;
 }
 
+void printExecutionInfo(IlsExecution &execution)
+{
+    std::cout << "\nBest tour of all:\n";
+    printSolution(execution.solution);
+    std::cout << std::endl;
+    std::cout << "Solution cost: " << execution.solution.cost << std::endl;
+    std::cout << "ILS execution duration: " << execution.durationSeconds << " seconds\n";
+    std::cout << "Status: " << (!execution.status ? "IN" : "") << "VALID SOLUTION\n";
+}
+
+void printResult(Result &result)
+{
+    std::cout << "\nAverage solution cost: " << result.averageCost << std::endl;
+    std::cout << "Average ILS execution duration: " << result.averageDurationSeconds << " seconds\n";
+    std::cout << "Status: " << (!result.status ? "IN" : "") << "VALID SOLUTIONS\n";
+}
+
+void saveResults(Result &result, std::string &name, const size_t size)
+{
+    
+}

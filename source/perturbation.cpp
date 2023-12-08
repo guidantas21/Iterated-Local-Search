@@ -8,7 +8,7 @@ Solution perturbation(Solution *solution, double **adjacencyMatrix)
 {
     int sequenceSize = solution->sequence.size();
 
-    int maxLimit = std::ceil(sequenceSize / 10.0f);
+    int maxLimit = std::ceil(sequenceSize / 10.);
     int minLimit = 2;
 
     int range = sequenceSize - 1;
@@ -54,7 +54,7 @@ Solution perturbation(Solution *solution, double **adjacencyMatrix)
             remainingSegment[i] = newSolution.sequence[posA + sizeB + i];
         }
 
-        for (int i = posA + sizeA; i < posB + sizeB; i++)
+        for (int i = posA + sizeA; i < posB + sizeB; ++i)
         {
             newSolution.sequence[i - sizeDifference] = newSolution.sequence[i];
         }
@@ -71,7 +71,7 @@ Solution perturbation(Solution *solution, double **adjacencyMatrix)
             remainingSegment[i] = newSolution.sequence[posB + sizeA + i];
         }
 
-        for (int i = posB + sizeA - 1; i >= posA + sizeA ; i--)
+        for (int i = posB + sizeA - 1; i >= posA + sizeA ; --i)
         {
             newSolution.sequence[i + sizeDifference] = newSolution.sequence[i];
         }
@@ -131,6 +131,5 @@ int randomNumber(int minLimit, int maxLimit)
     {
         return minLimit;
     }
-
     return minLimit + (std::rand() % (maxLimit - minLimit));
 }

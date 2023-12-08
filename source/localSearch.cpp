@@ -130,7 +130,6 @@ void executeSwap(std::vector<int> &sequence, int best_i, int best_j)
 
 
 
-
 bool bestImprovement2OPT(Solution *solution, double **adjacencyMatrix)
 {
     double bestDelta = 0;
@@ -244,7 +243,7 @@ double calculateOROPTCost(std::vector<int> &sequence, int initial, int destiny, 
 void executeOROPT(std::vector<int> &sequence, int initial, int destiny, int segmentSize) {
     int segment[3];
 
-    for (int i = 0; i < segmentSize; i++)
+    for (int i = 0; i < segmentSize; ++i)
     {
         segment[i] = sequence[initial + i];
     }	
@@ -262,7 +261,7 @@ void executeOROPT(std::vector<int> &sequence, int initial, int destiny, int segm
     } 
     else 
     {
-        for (int i = initial - 1; i > destiny; i--)
+        for (int i = initial - 1; i > destiny; --i)
         {
             sequence[i + segmentSize] = sequence[i];
         }
