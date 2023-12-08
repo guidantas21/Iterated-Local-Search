@@ -5,10 +5,11 @@
 
 #include <vector>
 #include <algorithm>
+#include <cmath>
+#include <cstdlib> 
 
 #include "solution.hpp"
-#include "construction.hpp"
 
-void localSearch(Solution &solution, double **adjacencyMatrix);
+void localSearch(Solution *solution, double **adjacencyMatrix);
 
 #endif

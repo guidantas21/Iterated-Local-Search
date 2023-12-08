@@ -4,7 +4,6 @@
 #define CONSTRUCTION_HPP
 
 #include <vector>
-#include <unordered_set>
 #include <algorithm>
 #include <iostream>
 #include <cstdlib>

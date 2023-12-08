@@ -11,11 +11,7 @@ std::random_device globalRandomDevice;
 
 bool compareInsertionsByCost(const Insertion& a, const Insertion& b) { return a.cost < b.cost; }
 
-int getRandomNumber(const int &min, const int &max);
-
-double getRandomNumber(const double &min, const double &max);
-
-std::vector<int> get3RandomVertices(std::vector<int> &candidateList);
+void get3RandomVertices(std::vector<int> &sequence, std::vector<int> &candidateList);
 
 std::vector<Insertion> calculateInsertions(
     double **adjacencyMatrix, const std::vector<int> &sequence, const std::vector<int> &candidateList);
@@ -27,13 +23,14 @@ Solution construction(double **adjacencyMatrix, const size_t &size)
 
     std::vector<int> candidateList(size-1);
 
-    for (size_t i = 0; i < size; i++)
+    // std::cout << "test\n";
+
+    for (size_t i = 0; i < size-1; i++)
     {
         candidateList[i] = i+1;
     }
 
-
-    solution.sequence = get3RandomVertices(candidateList);
+    get3RandomVertices(solution.sequence, candidateList);
     calculateCost(solution, adjacencyMatrix);
 
 
@@ -58,39 +55,20 @@ Solution construction(double **adjacencyMatrix, const size_t &size)
     return solution;
 }
 
-// int getRandomNumber(const int &min, const int &max)
-// {
-//     std::mt19937 generator(globalRandomDevice());
-//     std::uniform_int_distribution<> distribuition(min, max);
-
-//     return distribuition(generator);
-// }
-
-// double getRandomNumber(const double &min, const double &max)
-// {
-//     std::mt19937 generator(globalRandomDevice());
-//     std::uniform_real_distribution<> distribuition(min, max);
-
-//     return distribuition(generator);
-// }
-
-std::vector<int> get3RandomVertices(std::vector<int> &candidateList) 
+void get3RandomVertices(std::vector<int> &sequence, std::vector<int> &candidateList) 
 {
-    std::vector<int> sequence(5);
-
-    sequence[0] = 0;
-    sequence[4] = 0;
+    sequence.push_back(0);
 
     int vertexIndex;    
 
-    for (int i = 1; i < 4; i++)
+    for (int i = 0; i < 3; i++)
     {
-        // vertexIndex = getRandomNumber(1, candidateList.size()-1);
-        vertexIndex = (std::rand() % candidateList.size() - 1) + 1;
-        sequence[i] = candidateList[vertexIndex];
+        vertexIndex = std::rand() % candidateList.size();
+        sequence.emplace_back(candidateList[vertexIndex]);
         candidateList.erase(candidateList.begin() + vertexIndex);
     }
-    return sequence;
+
+    sequence.push_back(0);
 }
 
 std::vector<Insertion> calculateInsertions(

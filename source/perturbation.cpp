@@ -4,9 +4,9 @@ double calculatePerturbationCost(std::vector<int> &sequence, int posA, int sizeA
 
 int randomNumber(int minLimit, int maxLimit);
 
-Solution perturbation(Solution &solution, double **adjacencyMatrix)
+Solution perturbation(Solution *solution, double **adjacencyMatrix)
 {
-    int sequenceSize = solution.sequence.size();
+    int sequenceSize = solution->sequence.size();
 
     int maxLimit = std::ceil(sequenceSize / 10.0f);
     int minLimit = 2;
@@ -28,16 +28,16 @@ Solution perturbation(Solution &solution, double **adjacencyMatrix)
 
     int posB = randomNumber(firstPossiblePosB, lastPossiblePosB);
 
-    double delta = calculatePerturbationCost(solution.sequence, posA, sizeA, posB, sizeB, adjacencyMatrix);
 
-    Solution newSolution = solution;
+    double delta = calculatePerturbationCost(solution->sequence, posA, sizeA, posB, sizeB, adjacencyMatrix);
 
+    Solution newSolution = *solution;
     newSolution.cost += delta;
 
 
     int smallestSegment = std::min(sizeA, sizeB);
 
-    for (int i = 0; i < smallestSegment; i++)
+    for (int i = 0; i < smallestSegment; ++i)
     {
         std::swap(newSolution.sequence[posA + i], newSolution.sequence[posB + i]);
     }
@@ -49,7 +49,7 @@ Solution perturbation(Solution &solution, double **adjacencyMatrix)
 
     if (sizeA > sizeB)
     {
-        for (int i = 0; i < sizeDifference; i++)
+        for (int i = 0; i < sizeDifference; ++i)
         {
             remainingSegment[i] = newSolution.sequence[posA + sizeB + i];
         }
@@ -59,14 +59,14 @@ Solution perturbation(Solution &solution, double **adjacencyMatrix)
             newSolution.sequence[i - sizeDifference] = newSolution.sequence[i];
         }
 
-        for (int i = 0; i < sizeDifference; i++)
+        for (int i = 0; i < sizeDifference; ++i)
         {
             newSolution.sequence[posB + sizeB - sizeDifference + i] = remainingSegment[i];
         }
     }
     else if (sizeA < sizeB)
     {
-        for (int i = 0; i < sizeDifference; i++)
+        for (int i = 0; i < sizeDifference; ++i)
         {
             remainingSegment[i] = newSolution.sequence[posB + sizeA + i];
         }
@@ -76,7 +76,7 @@ Solution perturbation(Solution &solution, double **adjacencyMatrix)
             newSolution.sequence[i + sizeDifference] = newSolution.sequence[i];
         }
 
-        for (int i = 0; i < sizeDifference; i++)
+        for (int i = 0; i < sizeDifference; ++i)
         {
             newSolution.sequence[posA + sizeA + i] = remainingSegment[i];
         }
@@ -84,7 +84,8 @@ Solution perturbation(Solution &solution, double **adjacencyMatrix)
     return newSolution;
 }
 
-double calculatePerturbationCost(std::vector<int> &sequence, int posA, int sizeA, int posB, int sizeB, double **adjacencyMatrix)
+double calculatePerturbationCost(
+    std::vector<int> &sequence, int posA, int sizeA, int posB, int sizeB, double **adjacencyMatrix)
 {
     int vertex_posA = sequence[posA];
     int vertex_posA_prev = sequence[posA-1];
@@ -126,7 +127,6 @@ double calculatePerturbationCost(std::vector<int> &sequence, int posA, int sizeA
 
 int randomNumber(int minLimit, int maxLimit)
 {
-
     if (minLimit == maxLimit)
     {
         return minLimit;

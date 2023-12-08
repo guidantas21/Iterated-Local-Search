@@ -9,6 +9,6 @@
 
 #include "solution.hpp"
 
-Solution perturbation(Solution &solution, double **adjacencyMatrix);
+Solution perturbation(Solution *solution, double **adjacencyMatrix);
 
 #endif

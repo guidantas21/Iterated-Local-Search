@@ -1,21 +1,21 @@
 #include "localSearch.hpp"
 
 
-bool bestImprovementSwap(Solution &solution, double **adjacencyMatrix);
+bool bestImprovementSwap(Solution *solution, double **adjacencyMatrix);
 
 void executeSwap(std::vector<int> &sequence, int best_i, int best_j);
 
 double calculateSwapCost(std::vector<int> &sequence, int i, int j, double **adjacencyMatrix);
 
 
-bool bestImprovement2OPT(Solution &solution, double **adjacencyMatrix);
+bool bestImprovement2OPT(Solution *solution, double **adjacencyMatrix);
 
 void execute2OPT(std::vector<int> &sequence, int start, int end);
 
 double calculate2OPTCost(std::vector<int> &sequence, int start, int end, double **adjacencyMatrix);
 
 
-bool bestImprovementOROPT(Solution &solution, int segmentSize, double **adjacencyMatrix);
+bool bestImprovementOROPT(Solution *solution, int segmentSize, double **adjacencyMatrix);
 
 void executeOROPT(std::vector<int> &sequence, int initial, int destiny, int segmentSize);
 
@@ -23,14 +23,14 @@ double calculateOROPTCost(std::vector<int> &sequence, int initial, int destiny, 
 
 
 
-void localSearch(Solution &solution, double **adjacencyMatrix)
+void localSearch(Solution *solution, double **adjacencyMatrix)
 {
     std::vector<int> neighborsList = { 1, 2, 3, 4, 5 };
     bool improved = false;
 
     while (neighborsList.empty() == false)
     {
-        int neighborIndex = (int) rand() % neighborsList.size();
+        int neighborIndex = std::rand() % neighborsList.size();
 
         switch (neighborsList[neighborIndex])
         {
@@ -61,18 +61,18 @@ void localSearch(Solution &solution, double **adjacencyMatrix)
     }
 }
 
-bool bestImprovementSwap(Solution &solution, double **adjacencyMatrix)
+bool bestImprovementSwap(Solution *solution, double **adjacencyMatrix)
 {
     double bestDelta = 0;
     int best_i = 0, best_j = 0;
 
-    size_t range = solution.sequence.size() - 1;
+    size_t range = solution->sequence.size() - 1;
 
-    for (size_t i = 1; i < range; i++)
+    for (size_t i = 1; i < range; ++i)
     {
-        for (size_t j = i + 1; j < range; j++)
+        for (size_t j = i + 1; j < range; ++j)
         {
-            double delta = calculateSwapCost(solution.sequence, i, j, adjacencyMatrix);
+            double delta = calculateSwapCost(solution->sequence, i, j, adjacencyMatrix);
 
             if (delta < bestDelta)
             {
@@ -85,8 +85,8 @@ bool bestImprovementSwap(Solution &solution, double **adjacencyMatrix)
 
     if (bestDelta < 0)
     {
-        executeSwap(solution.sequence, best_i, best_j);
-        solution.cost += bestDelta;
+        executeSwap(solution->sequence, best_i, best_j);
+        solution->cost += bestDelta;
 
         return true;
     }
@@ -131,18 +131,18 @@ void executeSwap(std::vector<int> &sequence, int best_i, int best_j)
 
 
 
-bool bestImprovement2OPT(Solution &solution, double **adjacencyMatrix)
+bool bestImprovement2OPT(Solution *solution, double **adjacencyMatrix)
 {
     double bestDelta = 0;
     int bestStart = 0, bestEnd = 0;
 
-    size_t range = solution.sequence.size() - 1;
+    size_t range = solution->sequence.size() - 1;
 
-    for (size_t start = 0; start < range - 1; start++)
+    for (size_t start = 0; start < range - 1; ++start)
     {
-        for (size_t end = start + 1; end < range; end++)
+        for (size_t end = start + 1; end < range; ++end)
         {
-            double delta = calculate2OPTCost(solution.sequence, start, end, adjacencyMatrix);
+            double delta = calculate2OPTCost(solution->sequence, start, end, adjacencyMatrix);
             
             if (delta < bestDelta)
             {
@@ -155,8 +155,8 @@ bool bestImprovement2OPT(Solution &solution, double **adjacencyMatrix)
 
     if (bestDelta < 0)
     {
-        execute2OPT(solution.sequence, bestStart, bestEnd);
-        solution.cost += bestDelta;
+        execute2OPT(solution->sequence, bestStart, bestEnd);
+        solution->cost += bestDelta;
 
         return true;
     }
@@ -188,18 +188,18 @@ void execute2OPT(std::vector<int> &sequence, int start, int end)
 
 
 
-bool bestImprovementOROPT(Solution &solution, int segmentSize, double **adjacencyMatrix)
+bool bestImprovementOROPT(Solution *solution, int segmentSize, double **adjacencyMatrix)
 {
     double bestDelta = 0;
     int bestInitial = 0, bestDestiny = 0;
 
-    size_t range = solution.sequence.size() - segmentSize;
+    size_t range = solution->sequence.size() - segmentSize;
     
-    for (size_t initial = 1; initial < range; initial++)
+    for (size_t initial = 1; initial < range; ++initial)
     {
         for (size_t destiny = initial + segmentSize; destiny < range; destiny++)
         {
-            double delta = calculateOROPTCost(solution.sequence, initial, destiny, segmentSize, adjacencyMatrix);
+            double delta = calculateOROPTCost(solution->sequence, initial, destiny, segmentSize, adjacencyMatrix);
 
             if (delta < bestDelta)
             {
@@ -208,9 +208,9 @@ bool bestImprovementOROPT(Solution &solution, int segmentSize, double **adjacenc
                 bestDestiny = destiny;
             } 
         }
-        for (size_t destiny = 0; destiny < initial - 1; destiny++)
+        for (size_t destiny = 0; destiny < initial - 1; ++destiny)
         {
-            double delta = calculateOROPTCost(solution.sequence, initial, destiny, segmentSize, adjacencyMatrix);
+            double delta = calculateOROPTCost(solution->sequence, initial, destiny, segmentSize, adjacencyMatrix);
 
             if (delta < bestDelta)
             {
@@ -223,8 +223,8 @@ bool bestImprovementOROPT(Solution &solution, int segmentSize, double **adjacenc
 
     if (bestDelta < 0)
     {
-        executeOROPT(solution.sequence, bestInitial, bestDestiny, segmentSize);
-        solution.cost += bestDelta;
+        executeOROPT(solution->sequence, bestInitial, bestDestiny, segmentSize);
+        solution->cost += bestDelta;
 
         return true;
     }
@@ -262,7 +262,7 @@ void executeOROPT(std::vector<int> &sequence, int initial, int destiny, int segm
 
     if (initial <= destiny)
     {
-        for (int i = initial + segmentSize; i <= destiny; i++)
+        for (int i = initial + segmentSize; i <= destiny; ++i)
         {
             sequence[i - segmentSize] = sequence[i];
         }
