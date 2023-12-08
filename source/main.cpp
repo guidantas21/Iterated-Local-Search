@@ -62,8 +62,6 @@ int main(int argc, char** argv)
 
     std::cout << "Status: ";
 
-    // if (!isValid(solution, SIZE)) std::cout << "IN";
-
     std::cout << (!isValid(solution, SIZE) ? "IN" : "") << "VALID SOLUTION\n";
 
     return 0;

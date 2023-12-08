@@ -10,8 +10,6 @@ Solution ILS(double **adjacencyMatrix, size_t size, int maxIterations, int maxIt
     {
         Solution currentSolution = construction(adjacencyMatrix, size);
 
-
-
         Solution bestOfIteraction = currentSolution;
 
         int iterationsILS = 0;

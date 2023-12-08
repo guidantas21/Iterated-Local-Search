@@ -208,17 +208,6 @@ bool bestImprovementOROPT(Solution *solution, int segmentSize, double **adjacenc
                 bestDestiny = destiny;
             } 
         }
-        // for (size_t destiny = 0; destiny < initial - 1; ++destiny)
-        // {
-        //     double delta = calculateOROPTCost(solution->sequence, initial, destiny, segmentSize, adjacencyMatrix);
-
-        //     if (delta < bestDelta)
-        //     {
-        //         bestDelta = delta;
-        //         bestInitial = initial;
-        //         bestDestiny = destiny;
-        //     } 
-        // }
     } 
 
     if (bestDelta < 0)
